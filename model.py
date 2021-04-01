@@ -15,6 +15,7 @@ class User(db.Model):
     username = db.Column(db.String(20), unique=True)
     password = db.Column(db.String)
     email = db.Column(db.String)
+    created_at = db.Column(db.DateTime)
 
     def __repr__(self):
         return f'User id={self.user_id} username={self.username}'
@@ -30,6 +31,8 @@ class Podcast(db.Model):
     name = db.Column(db.String)
     rss_link = db.Column(db.String)
     cover = db.Column(db.String)
+    language = db.Column(db.String)
+    number_of_eps = db.Column(db.Integer)
 
     def __repr__(self):
         return f'Podcast id={self.podcast_id} name={self.username}'
@@ -39,17 +42,28 @@ class Review(db.Model):
 
     __tablename__ = 'reviews'
 
-    review_id = 
+    review_id = db.Column(db.Integer,
+                          autoincrement=True
+                          primary_key=True)
+    score = db.Column(db.Integer)
+    review_text = db.Column(db.Text)
+    podcast_id = db.Column(db.Integer,
+                           db.ForeignKey('podcast.podcast_id')
+                           nullable=False)
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.user_id')
+                        nullable=False)
+
 
 class Podcaster(db.Model):
-    """"""
+    """A back-end user, can access and edit podcast pages."""
 
     podcaster_id = db.Column(db.Integer,
                    autoincrement=True,
                    primary_key=True)
 
 class Host(db.Model):
-    """"""
+    """A podcast host."""
 
     host_id = db.Column(db.Integer,
                    autoincrement=True,
@@ -61,6 +75,11 @@ class PodcastHost(db.Model):
     podcast_host_id = db.Column(db.Integer,
                    autoincrement=True,
                    primary_key=True)
+    podcast_id = db.Column(db.Integer,
+                           db.ForeignKey('podcast.podcast_id'),
+                           nullable=False)
+
+    
 
 class PodcastEpisodes(db.Model):
     """"""
