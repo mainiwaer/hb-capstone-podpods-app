@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+######################################################################
+
 class User(db.Model):
     """A user."""
 
@@ -15,10 +17,11 @@ class User(db.Model):
     username = db.Column(db.String(20), unique=True)
     password = db.Column(db.String)
     email = db.Column(db.String)
-    created_at = db.Column(db.DateTime)
+    created_on = db.Column(db.DateTime)
 
     def __repr__(self):
         return f'User id={self.user_id} username={self.username}'
+
 
 class Podcast(db.Model):
     """A podcast."""
@@ -28,14 +31,16 @@ class Podcast(db.Model):
     podcast_id = db.Column(db.Integer,
                    autoincrement=True,
                    primary_key=True)
-    name = db.Column(db.String)
-    rss_link = db.Column(db.String)
+    title = db.Column(db.String)
+    description = db.Column(db.Text)
+    website = db.Column(db.String)
     cover = db.Column(db.String)
     language = db.Column(db.String)
-    number_of_eps = db.Column(db.Integer)
+    explicit_content = db.Column(db.Boolean)
+    total_episodes = db.Column(db.Integer)
 
     def __repr__(self):
-        return f'Podcast id={self.podcast_id} name={self.username}'
+        return f'Podcast id={self.podcast_id} name={self.title}'
 
 class Review(db.Model):
     """A review."""
@@ -48,7 +53,7 @@ class Review(db.Model):
     score = db.Column(db.Integer)
     review_text = db.Column(db.Text)
     podcast_id = db.Column(db.Integer,
-                           db.ForeignKey('podcast.podcast_id'),
+                           db.ForeignKey('podcasts.podcast_id'),
                            nullable=False)
     user_id = db.Column(db.Integer,
                         db.ForeignKey('users.user_id'),
@@ -57,54 +62,13 @@ class Review(db.Model):
     podcast = db.relationship('Podcast', backref='reviews')
     user = db.relationship('User', backref='reviews')
 
-class Podcaster(db.Model):
-    """A back-end user, can access and edit podcast pages."""
+    def __repr__(self):
+        return f'Review id={self.review_id} score={self.score}'
 
-    podcaster_id = db.Column(db.Integer,
-                   autoincrement=True,
-                   primary_key=True)
-
-class Host(db.Model):
-    """A podcast host."""
-
-    host_id = db.Column(db.Integer,
-                   autoincrement=True,
-                   primary_key=True)
-
-class PodcastHost(db.Model):
-    """"""
-
-    podcast_host_id = db.Column(db.Integer,
-                   autoincrement=True,
-                   primary_key=True)
-    podcast_id = db.Column(db.Integer,
-                           db.ForeignKey('podcast.podcast_id'),
-                           nullable=False)
+######################################################################
 
 
-class PodcastEpisodes(db.Model):
-    """"""
-
-    podcast_episode_id = db.Column(db.Integer,
-                   autoincrement=True,
-                   primary_key=True)
-
-class Collection(db.Model):
-    """"""
-
-    collection_id = db.Column(db.Integer,
-                   autoincrement=True,
-                   primary_key=True)
-
-
-class PodcastCaster(db.Model):
-    """"""
-
-    podcast_caster_id = db.Column(db.Integer,
-                   autoincrement=True,
-                   primary_key=True)
-
-def connect_to_db(flask_app, db_uri='postgresql:///ratings', echo=True):
+def connect_to_db(flask_app, db_uri='postgresql:///pod', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
