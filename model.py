@@ -29,15 +29,8 @@ class Podcast(db.Model):
     __tablename__ = 'podcasts'
 
     podcast_id = db.Column(db.Integer,
-                   autoincrement=True,
                    primary_key=True)
     title = db.Column(db.String)
-    description = db.Column(db.Text)
-    website = db.Column(db.String)
-    cover = db.Column(db.String)
-    language = db.Column(db.String)
-    explicit_content = db.Column(db.Boolean)
-    total_episodes = db.Column(db.Integer)
 
     def __repr__(self):
         return f'Podcast id={self.podcast_id} name={self.title}'
@@ -83,3 +76,4 @@ if __name__ == '__main__':
     from server import app
 
     connect_to_db(app)
+

@@ -45,3 +45,13 @@ def create_review(user, podcast, review_text, score):
 
     db.session.add(review)
     db.session.commit()
+
+def get_user_by_username(username):
+    """Return a user by username."""
+
+    return User.query.filter(User.username == username).first()
+
+def get_email_by_username(email):
+    """Return a user by email."""
+
+    return User.query.filter(User.email == email).first()

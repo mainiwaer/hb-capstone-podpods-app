@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Podder{% endblock %}
+
+{% block header %}Podcast Review Site{% endblock %}
+
+{% block content %}
+    <h3>Current Hot Pods</h3>
+    <ul>
+        {% for podcast in podcasts %}
+            <li>
+                <a href="/podcasts/{{ podcast.podcast_id }}">{{ podcast.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

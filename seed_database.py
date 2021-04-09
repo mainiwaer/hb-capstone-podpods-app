@@ -20,25 +20,25 @@ with open('data/mock_podcast.json') as f:
 
 podcasts_in_db = []
 
-# for podcast in podcast_data:
-#     title, description, website, cover, = (podcast['title'],
-#                                            podcast['description'],
-#                                            podcast['website'],
-#                                            podcast['thumbnail'])
+for podcast in podcast_data:
+    title, description, website, cover, = (podcast['title'],
+                                           podcast['description'],
+                                           podcast['website'],
+                                           podcast['thumbnail'])
     
-#     language, explicit_content, total_episodes = (podcast['language'],
-#                                                   podcast['explicit_content'],
-#                                                   podcast['total_episodes'])
+    language, explicit_content, total_episodes = (podcast['language'],
+                                                  podcast['explicit_content'],
+                                                  podcast['total_episodes'])
 
-#     db_podcast = crud.create_podcast(title=title,
-#                                      description=description,
-#                                      website=website,
-#                                      cover=cover,
-#                                      language=language,
-#                                      explicit_content=explicit_content,
-#                                      total_episodes=total_episodes)
+    db_podcast = crud.create_podcast(title=title,
+                                     description=description,
+                                     website=website,
+                                     cover=cover,
+                                     language=language,
+                                     explicit_content=explicit_content,
+                                     total_episodes=total_episodes)
     
-#     podcasts_in_db.append(db_podcast)
+    podcasts_in_db.append(db_podcast)
 
 for n in range(10):
     

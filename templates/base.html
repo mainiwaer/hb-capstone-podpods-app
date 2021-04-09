@@ -12,13 +12,21 @@
     <link rel="stylesheet" href="/static/css/styles.css">
 
     <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="/static/js/my.js"></script>
+    <!-- <script src="/static/js/my.js"></script> -->
     {% block head %}{% endblock %}
   </head>
 
   <body>
+
+    {% for msg in get_flashed_messages() %}
+      <p class="flash-msg">
+        {{ msg }}
+      </p>
+    {% endfor %}
+
     <h1>Podcast Site</h1>
-    {% block content %}{% endblock %}
+      {% block content %}
+      {% endblock %}
     <footer>Podcast Site 2021</footer>
   </body>
 

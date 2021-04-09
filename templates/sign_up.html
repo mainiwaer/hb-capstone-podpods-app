@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Podder{% endblock %}
+
+{% block header %}Podcast Review Site{% endblock %}
+
+{% block content %}
+    <h2>Create An Account</h2>
+    <form action="/users" method="POST">
+
+    <p>
+        Username <input type="text" name="username">
+    </p>
+    <p>
+        Email <input type="text" name="email">
+    </p>
+
+    <p>
+        Password <input type="password" name="password">
+    </p>
+
+    <p>
+        <input type="submit">
+    </p>
+    </form>
+{% endblock %}
