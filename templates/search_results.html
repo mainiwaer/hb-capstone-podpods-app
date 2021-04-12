@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Podder{% endblock %}
+
+{% block header %}Podcast Review Site{% endblock %}
+
+{% block content %}
+    <h3>Podcast Results:</h3>
+
+    {% for podcast in result %}
+        <li class="list-group-item list-group-item-action">
+            <div>
+                <img src="{{ podcast['thumbnail'] }}">
+                <a href="/podcast/{{ podcast['id'] }}">
+                <h4>{{ podcast['title_original']}}</a></h4>
+                {{ podcast['description_original']}}                
+
+            </div>
+
+        </li>
+    {% endfor %}
+
+{% endblock %}

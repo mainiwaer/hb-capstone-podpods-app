@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Podder{% endblock %}
+
+{% block header %}Podcast Review Site{% endblock %}
+
+{% block content %}
+
+    <div style="float:left">
+        <img src="{{ podcast['thumbnail'] }}">
+    </div>
+    <div>
+
+        <h3>{{ podcast['title'] }}</h3>
+
+        <div>
+            {{ podcast['description'] }} 
+        </div>
+        <div>
+            Language:{{ podcast['language'] }}  Explicit Content:{{ explicit }}  Total Episodes:{{ podcast['total_episodes'] }} <a href="{{ podcast['website'] }}">Website</a> 
+        </div>
+        <div>
+
+        </div>
+    </div>
+    <br style="clear:both" />
+
+    <div style="float:left">
+        <h5>Reviews:</h5>
+        {% if reviews %}
+            {% for review in reviews %}
+                <div>
+                    {{ review.user.username }} said:
+                </div>
+                <div>
+                    {{ review.review_text }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+
+    <div style="width:500px;height:500px;overflow:scroll;padding:5px;float:right">
+        {% for ep in podcast['episodes'] %}
+            <li class="list-group-item list-group-item-action">
+                <div>
+                    <h5>{{ ep['title'] }}</h5>
+                </div>
+                <div>
+                    {{ ep['description']}} 
+                </div>
+                <div> 
+                    <audio controls src="{{ep['audio']}}">hehe</audio>
+                    
+                </div>
+            </li>
+        {% endfor %}
+    </div>
+<br style="clear:both" />
+{% endblock %}

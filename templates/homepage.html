@@ -14,23 +14,11 @@
   </ul>
 
   <h3>Search For a Podcast:</h3>
-  <form>
+  <form method="GET" action="/search">
     <input type="text" name="q">
-    <input type="radio" name="search-type" value="podcast">
-    <label>podcast</label>
-    <input type="radio" name="search-type" value="episode">
-    <label>episode</label>
-
     <input type="submit">
   </form>
-  <script>
-    // some javascript goes RIGHT HERE!
-    // if it's a whole lot of JS, then it'll make your page harder to read
-    // then we wanna make a whole separate JS file and import it
-    // that could be only on this page, or it could be in base.html
 
-    // could do a form action
-  </script>
   <p>Review it</p>
 
 {% endblock %}

@@ -16,27 +16,16 @@ model.connect_to_db(server.app)
 model.db.create_all()
 
 with open('data/mock_podcast.json') as f:
-    podcast_data = json.loads(f.read())
+    test_podcast_data = json.loads(f.read())
 
 podcasts_in_db = []
 
-for podcast in podcast_data:
-    title, description, website, cover, = (podcast['title'],
-                                           podcast['description'],
-                                           podcast['website'],
-                                           podcast['thumbnail'])
-    
-    language, explicit_content, total_episodes = (podcast['language'],
-                                                  podcast['explicit_content'],
-                                                  podcast['total_episodes'])
+for podcast in test_podcast_data:
+    podcast_id, title = (podcast['id'],
+                         podcast['title'])
 
-    db_podcast = crud.create_podcast(title=title,
-                                     description=description,
-                                     website=website,
-                                     cover=cover,
-                                     language=language,
-                                     explicit_content=explicit_content,
-                                     total_episodes=total_episodes)
+    db_podcast = crud.create_podcast(podcast_id=podcast_id,
+                                     title=title)
     
     podcasts_in_db.append(db_podcast)
 

@@ -16,28 +16,41 @@ def create_user(username, email, password, created_on):
 
     return user
 
+def get_user_by_username(username):
+    """Return a user by username."""
 
-def create_podcast(title, description, website, cover, language, explicit_content, total_episodes):
+    return User.query.filter(User.username == username).first()
+
+def get_user_by_email(email):
+    """Return a user by email."""
+
+    return User.query.filter(User.email == email).first()
+
+def create_podcast(podcast_id, title):
     """Create and return a new podcast."""
 
-    podcast = Podcast(title=title,
-                      description=description,
-                      website=website,
-                      cover=cover,
-                      language=language,
-                      explicit_content=explicit_content,
-                      total_episodes=total_episodes)
+    podcast = Podcast(podcast_id=podcast_id,
+                      title=title,)
     
     db.session.add(podcast)
     db.session.commit()
 
     return podcast
 
+def get_podcast_by_id(podcast_id):
+    """Return a Podcast by its id."""
+
+    return Podcast.query.filter(Podcast.podcast_id == podcast_id).first()
+
 def get_hot_pods():
     """Returns list of hot podcasts."""
 
     return Podcast.query.all()
 
+def get_reviews_by_podcast_id(podcast_id):
+    """Return a review by podcast id."""
+
+    return Review.query.filter(Review.podcast_id == podcast_id).all()
 
 def create_review(user, podcast, review_text, score):
 
@@ -46,12 +59,3 @@ def create_review(user, podcast, review_text, score):
     db.session.add(review)
     db.session.commit()
 
-def get_user_by_username(username):
-    """Return a user by username."""
-
-    return User.query.filter(User.username == username).first()
-
-def get_email_by_username(email):
-    """Return a user by email."""
-
-    return User.query.filter(User.email == email).first()

@@ -28,7 +28,7 @@ class Podcast(db.Model):
 
     __tablename__ = 'podcasts'
 
-    podcast_id = db.Column(db.Integer,
+    podcast_id = db.Column(db.String,
                    primary_key=True)
     title = db.Column(db.String)
 
@@ -45,7 +45,7 @@ class Review(db.Model):
                           primary_key=True)
     score = db.Column(db.Integer)
     review_text = db.Column(db.Text)
-    podcast_id = db.Column(db.Integer,
+    podcast_id = db.Column(db.String,
                            db.ForeignKey('podcasts.podcast_id'),
                            nullable=False)
     user_id = db.Column(db.Integer,
