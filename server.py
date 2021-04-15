@@ -13,8 +13,13 @@ import os
 
 from jinja2 import StrictUndefined
 
+os.system("source secrets.sh")
+
 app = Flask(__name__)
 app.secret_key = b'\x0c\xc8#\xf1TCJ\xfa\xa3F\xfc\x9e\xf4{\xe6\xd7'
+
+# os.environ["FLASK_KEY"]
+
 app.jinja_env.undefined = StrictUndefined 
 
 API_KEY = os.environ["LISTENNOTES_KEY"]
