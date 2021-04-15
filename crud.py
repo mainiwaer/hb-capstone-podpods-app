@@ -26,6 +26,16 @@ def get_user_by_email(email):
 
     return User.query.filter(User.email == email).first()
 
+
+def check_user_password_by_email(email, password):
+    """Check if the password associated with the email is correct."""
+
+    user = get_user_by_email(email)
+    user_password = user.password
+
+    return user_password == password
+    
+
 def create_podcast(podcast_id, title):
     """Create and return a new podcast."""
 

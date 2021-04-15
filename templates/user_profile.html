@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Podder{% endblock %}
+
+{% block header %}Podcast Review Site{% endblock %}
+
+{% block content %}
+<div>
+    <h5>Hello, {{ user }}!</h5>
+    <div>Here are your recent reviews:</div>
+
+    {% for review in reviews %}
+        <li>
+            {{ review.podcast.title }}
+            Score: {{ review.score }}
+            <div>
+                {{ review.review_text }}
+            </div>
+        </li>
+    {% endfor %}
+</div>
+
+{% endblock %}
