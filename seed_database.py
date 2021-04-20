@@ -18,7 +18,8 @@ model.db.create_all()
 REVIEW_TEXT = [
     "Really fun and informative podcast!",
     "I feel like there aren't enough cats in this podcast...",
-    "THANK you to this podcast for existing, I commute 8 hours a day to ub*rmelon hq and I would be a mess without it",
+    "THANK you to this podcast for existing, I commute 8 hours \
+        a day to ub*rmelon hq and I would be a mess without it",
     "The star war would of been a dream",
     "LOLLLLL this is so funny I'm gonna tell all my friends"
 ]
@@ -35,20 +36,28 @@ for podcast in test_podcast_data:
 
     db_podcast = crud.create_podcast(podcast_id=podcast_id,
                                      title=title)
-    
+
     podcasts_in_db.append(db_podcast)
 
 for n in range(10):
-    
+
     username = f'listener{n}'
     email = f'listener{n}@podcast.com'
     password = 'rest'
     created_on = datetime.now()
 
-    user = crud.create_user(username, email, password, created_on)
+    new_user = crud.create_user(username, email, password, created_on)
+    new_collection = crud.create_collection(new_user, "test")
+
+    print(new_collection)
 
     for p in range(5):
         random_podcast = choice(podcasts_in_db)
         score = randint(1, 5)
         review_text = choice(REVIEW_TEXT)
-        crud.create_review(user, random_podcast, review_text, score)
+        crud.create_review(new_user, random_podcast, review_text, score)
+
+    for r in range(5):
+        random_podcast = choice(podcasts_in_db)
+        crud.add_to_podcast_collection(new_collection,
+                                       random_podcast)

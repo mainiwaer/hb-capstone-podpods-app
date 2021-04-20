@@ -1,7 +1,9 @@
 """Server for movie ratings app."""
+
 import requests
 
-from flask import (Flask, request, render_template, flash, session, redirect, Markup)
+from flask import (Flask, request, render_template,
+                   flash, session, redirect, Markup)
 
 from model import connect_to_db
 
@@ -20,7 +22,7 @@ app.secret_key = b'\x0c\xc8#\xf1TCJ\xfa\xa3F\xfc\x9e\xf4{\xe6\xd7'
 
 # os.environ["FLASK_KEY"]
 
-app.jinja_env.undefined = StrictUndefined 
+app.jinja_env.undefined = StrictUndefined
 
 API_KEY = os.environ["LISTENNOTES_KEY"]
 
@@ -69,8 +71,10 @@ def register_user():
 
     else:
         crud.create_user(username, email, password, created_on)
-        flash(Markup('Account created! Please <a href="/signin"class="alert-link">Sign In</a>'))
+        flash(Markup('Account created! Please \
+                     <a href="/signin"class="alert-link">Sign In</a>'))
         return redirect('/signup')
+
 
 @app.route('/signin')
 def show_sign_in_page():
@@ -82,16 +86,17 @@ def show_sign_in_page():
 @app.route('/signin', methods=['POST'])
 def sign_user_in():
     """Sign user into website."""
-    error = None
 
     email = request.form['email']
     pw = request.form['password']
 
     email_check = crud.get_user_by_email(email)
 
-    if email_check == None:
+    if email_check is None:
 
-        flash(Markup('A user with this email does not exist. Please try again or <a href="/signup"class="alert-link">Sign Up For An Account</a>'))
+        flash(Markup('A user with this email does not exist. \
+                    Please try again or <a href="/signup"class="alert-link">\
+                    Sign Up For An Account</a>'))
         return redirect('/signin')
 
     pw_check = crud.check_user_password_by_email(email, pw)
@@ -104,6 +109,7 @@ def sign_user_in():
         flash('Incorrect password. Please try again.')
         return redirect('/signin')
 
+
 @app.route('/user-profile')
 def show_user_profile():
     """Render profile page of user that is logged in."""
@@ -115,12 +121,26 @@ def show_user_profile():
     email = session['email']
     account = crud.get_user_by_email(email)
     user_reviews = account.reviews
+    user_collections = account.collections
 
+    user_collections_pods = {}
+
+    for collection in user_collections:
+
+        collection_pods = []
+
+        for pod in collection.collection_podcasts:
+            pod_object = crud.get_podcast_by_id(pod.podcast_id)
+            collection_pods.append(pod_object)
+
+        user_collections_pods[collection.name] = collection_pods
 
     return render_template('user_profile.html',
-                            user=user,
-                            email=email,
-                            reviews=user_reviews)
+                           user=user,
+                           email=email,
+                           reviews=user_reviews,
+                           collections=user_collections,
+                           collections_details=user_collections_pods)
 
 
 @app.route('/search')
@@ -128,12 +148,12 @@ def show_search_results():
     """Show first 10 podcasts based on a keyword search"""
 
     keyword = request.args.get('q', '')
-    
+
     url = 'https://listen-api.listennotes.com/api/v2/search'
 
-    headers = {'X-ListenAPI-Key': API_KEY,}
+    headers = {'X-ListenAPI-Key': API_KEY}
 
-    payload = {'q': keyword, 'type':'podcast'}
+    payload = {'q': keyword, 'type': 'podcast'}
 
     response = requests.request('GET', url, headers=headers, params=payload)
 
@@ -150,8 +170,7 @@ def show_podcast_details(id):
 
     url = f'https://listen-api.listennotes.com/api/v2/podcasts/{id}'
 
-    headers = {'X-ListenAPI-Key': API_KEY,}
-
+    headers = {'X-ListenAPI-Key': API_KEY}
 
     response = requests.request('GET', url, headers=headers)
     pod = response.json()
@@ -159,21 +178,21 @@ def show_podcast_details(id):
 
     reviews = crud.get_reviews_by_podcast_id(id)
 
-    if explicit_tag == True:
+    if explicit_tag:
         tag = 'Yes'
     else:
         tag = 'No'
 
     return render_template('podcast_details.html',
-                             podcast=pod,
-                             explicit=tag,
-                             reviews=reviews)
+                           podcast=pod,
+                           explicit=tag,
+                           reviews=reviews)
 
 
 @app.route('/review', methods=['POST'])
 def submit_podcast_review():
     """Create user submitted review."""
-    
+
     email = request.form['user-email']
     podcast_id = request.form['podcast-id']
     podcast_name = request.form['podcast-title']
@@ -184,7 +203,7 @@ def submit_podcast_review():
         flash('Please sign in to leave a review.')
         return redirect(f'/podcast/{podcast_id}')
 
-    if crud.get_podcast_by_id(podcast_id) == None:
+    if crud.get_podcast_by_id(podcast_id) is None:
         crud.create_podcast(podcast_id, podcast_name)
 
     user = crud.get_user_by_email(email)
@@ -193,8 +212,9 @@ def submit_podcast_review():
     crud.create_review(user, podcast, review, score)
 
     flash('Thank you for leaving a review!')
-    
+
     return redirect(f'/podcast/{podcast_id}')
+
 
 @app.route('/logout')
 def log_user_out():
@@ -204,8 +224,7 @@ def log_user_out():
     flash('You have been signed out.')
     return redirect('/')
 
+
 if __name__ == '__main__':
     connect_to_db(app)
     app.run(host='0.0.0.0', debug=True)
-
-

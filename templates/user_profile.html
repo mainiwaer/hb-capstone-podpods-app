@@ -6,8 +6,8 @@
 
 {% block content %}
 <div>
-    <h5>Hello, {{ user }}!</h5>
-    <div>Here are your recent reviews:</div>
+    <h4>Hello, {{ user }}!</h4>
+    <div><h5>Here are your recent reviews:</h5></div>
 
     {% for review in reviews %}
         <li>
@@ -17,6 +17,17 @@
                 {{ review.review_text }}
             </div>
         </li>
+    {% endfor %}
+    <div><h5>Here are your Collections:</h5></div>
+    {% for collection in collections %}
+
+        {{ collection.name }}
+
+        {% for pod in collections_details[collection.name] %}
+            {{ pod.title }}
+        
+        {% endfor %}
+        
     {% endfor %}
 </div>
 
