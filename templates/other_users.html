@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Podder{% endblock %}
+
+{% block header %}Podcast Review Site{% endblock %}
+
+{% block content %}
+<div>
+    <h4>{{ user }}'s Profile</h4>
+    <div><h5>{{ user }}'s recent reviews:</h5></div>
+
+    {% for review in reviews %}
+        <li class="list-group-item list-group-item-action">
+            <b><a href="/podcast/{{ review.podcast.podcast_id }}">{{ review.podcast.title }}</a></b> &nbsp;&nbsp;
+            Score: {{ review.score }}
+            <div>
+                {{ review.review_text }}
+            </div>
+        </li>
+    {% endfor %}
+    <div><h5>{{ user }}'s Collections</h5></div>
+    {% for collection in collections %}
+        <div style="margin-bottom: 10px;">
+            <h5>{{ collection.name }}</h5>
+
+            {% for pod in collections_details[collection.name] %}
+                <div style="float:left">
+                    <a href="/podcast/{{ pod.podcast_id }}">
+                        <div>
+                            <img style="width: 200px; height: 200px"src="{{ pod.cover }}">
+                        </div>
+                        <div style="width: 200px; overflow-wrap: anywhere;">
+                            {{ pod.title }}
+                        </div>
+                    </a> 
+                </div>
+            {% endfor %}
+        </div>
+        <br style="clear:both"/>
+    {% endfor %}
+</div>
+
+{% endblock %}

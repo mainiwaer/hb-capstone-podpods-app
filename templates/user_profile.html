@@ -10,8 +10,8 @@
     <div><h5>Here are your recent reviews:</h5></div>
 
     {% for review in reviews %}
-        <li>
-            {{ review.podcast.title }}
+        <li class="list-group-item list-group-item-action">
+            <b>{{ review.podcast.title }}</b> &nbsp;&nbsp;
             Score: {{ review.score }}
             <div>
                 {{ review.review_text }}
@@ -19,16 +19,31 @@
         </li>
     {% endfor %}
     <div><h5>Here are your Collections:</h5></div>
+
     {% for collection in collections %}
+        <div style="margin-bottom: 10px;">
+            <h5>{{ collection.name }}</h5>
 
-        {{ collection.name }}
-
-        {% for pod in collections_details[collection.name] %}
-            {{ pod.title }}
-        
-        {% endfor %}
-        
+            {% for pod in collections_details[collection.name] %}
+            <div style="float:left">
+                <a href="/podcast/{{ pod.podcast_id }}">
+                    <div>
+                        <img style="width: 200px; height: 200px"src="{{ pod.cover }}">
+                    </div>
+                    <div style="width: 200px; overflow-wrap: anywhere;">
+                        {{ pod.title }}
+                    </div>
+                </a> 
+            </div>
+            {% endfor %}
+        </div>
+        <br style="clear:both"/>
     {% endfor %}
 </div>
 
 {% endblock %}
+
+
+
+
+

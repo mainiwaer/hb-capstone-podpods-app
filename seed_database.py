@@ -31,11 +31,13 @@ with open('data/mock_podcast.json') as f:
 podcasts_in_db = []
 
 for podcast in test_podcast_data:
-    podcast_id, title = (podcast['id'],
-                         podcast['title'])
+    podcast_id, title, cover = (podcast['id'],
+                                podcast['title'],
+                                podcast['cover'])
 
     db_podcast = crud.create_podcast(podcast_id=podcast_id,
-                                     title=title)
+                                     title=title,
+                                     cover=cover)
 
     podcasts_in_db.append(db_podcast)
 
@@ -47,9 +49,6 @@ for n in range(10):
     created_on = datetime.now()
 
     new_user = crud.create_user(username, email, password, created_on)
-    new_collection = crud.create_collection(new_user, "test")
-
-    print(new_collection)
 
     for p in range(5):
         random_podcast = choice(podcasts_in_db)
@@ -57,7 +56,13 @@ for n in range(10):
         review_text = choice(REVIEW_TEXT)
         crud.create_review(new_user, random_podcast, review_text, score)
 
-    for r in range(5):
-        random_podcast = choice(podcasts_in_db)
-        crud.add_to_podcast_collection(new_collection,
-                                       random_podcast)
+    new_collection = crud.create_collection(new_user, "Top Favs")
+    second_new_collection = crud.create_collection(new_user, "Informative")
+    collects = [new_collection, second_new_collection]
+
+    for collect in collects:
+
+        for r in range(5):
+            random_podcast = choice(podcasts_in_db)
+            crud.add_to_podcast_collection(collect,
+                                           random_podcast)

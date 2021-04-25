@@ -55,6 +55,7 @@ class Podcast(db.Model):
     podcast_id = db.Column(db.String,
                            primary_key=True)
     title = db.Column(db.String)
+    cover = db.Column(db.String)
 
     def __repr__(self):
         return f'Podcast id={self.podcast_id} name={self.title}'

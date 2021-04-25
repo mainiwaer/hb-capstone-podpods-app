@@ -28,6 +28,12 @@ def get_user_by_username(username):
     return User.query.filter(User.username == username).first()
 
 
+def search_for_user(search_term):
+    """Return a list of users by search term."""
+
+    return User.query.filter(User.username.like(f'%{search_term}%')).all()
+
+
 def get_user_by_email(email):
     """Return a user by email."""
 
@@ -43,11 +49,12 @@ def check_user_password_by_email(email, password):
     return user_password == password
 
 
-def create_podcast(podcast_id, title):
+def create_podcast(podcast_id, title, cover):
     """Create and return a new podcast."""
 
     podcast = Podcast(podcast_id=podcast_id,
-                      title=title,)
+                      title=title,
+                      cover=cover)
 
     db.session.add(podcast)
     db.session.commit()
@@ -93,6 +100,13 @@ def create_collection(user_collection, name):
     db.session.commit()
 
     return collect
+
+
+def get_collection_by_id(collection_id):
+    """Returns a collection by its id."""
+
+    return Collection.query.filter(Collection.collection_id ==
+                                   collection_id).first()
 
 
 def add_to_podcast_collection(collection, podcast):

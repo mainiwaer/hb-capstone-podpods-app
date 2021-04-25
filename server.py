@@ -19,6 +19,7 @@ os.system("source secrets.sh")
 
 app = Flask(__name__)
 app.secret_key = b'\x0c\xc8#\xf1TCJ\xfa\xa3F\xfc\x9e\xf4{\xe6\xd7'
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 # os.environ["FLASK_KEY"]
 
@@ -125,7 +126,11 @@ def show_user_profile():
 
     user_collections_pods = {}
 
+    session['collections'] = {}
+
     for collection in user_collections:
+
+        session['collections'][collection.collection_id] = collection.name
 
         collection_pods = []
 
@@ -143,25 +148,85 @@ def show_user_profile():
                            collections_details=user_collections_pods)
 
 
+@app.route('/user/<username>')
+def show_other_user_profile(username):
+    """Show the user profile of other registered users"""
+
+    account = crud.get_user_by_username(username)
+    reviews = account.reviews
+    collections = account.collections
+
+    collection_names = {}
+    collections_pods = {}
+
+    for collection in collections:
+
+        collection_names[collection.collection_id] = collection.name
+
+        collection_pods = []
+
+        for pod in collection.collection_podcasts:
+            pod_object = crud.get_podcast_by_id(pod.podcast_id)
+            collection_pods.append(pod_object)
+
+        collections_pods[collection.name] = collection_pods
+
+    return render_template('other_users.html',
+                           user=username,
+                           reviews=reviews,
+                           collections=collections,
+                           collections_details=collections_pods)
+
+
 @app.route('/search')
 def show_search_results():
     """Show first 10 podcasts based on a keyword search"""
 
-    keyword = request.args.get('q', '')
+    if request.args.get('search-type', '') == 'podcast-search':
 
-    url = 'https://listen-api.listennotes.com/api/v2/search'
+        keyword = request.args.get('q', '')
 
-    headers = {'X-ListenAPI-Key': API_KEY}
+        url = 'https://listen-api.listennotes.com/api/v2/search'
 
-    payload = {'q': keyword, 'type': 'podcast'}
+        headers = {'X-ListenAPI-Key': API_KEY}
 
-    response = requests.request('GET', url, headers=headers, params=payload)
+        payload = {'q': keyword, 'type': 'podcast'}
 
-    print(response)
-    search_result = response.json()['results']
+        response = requests.request('GET', url,
+                                    headers=headers,
+                                    params=payload)
 
-    return render_template('search_results.html',
-                           result=search_result)
+        search_result = response.json()['results']
+
+        return render_template('search_results.html',
+                               result=search_result)
+
+    if request.args.get('search-type', '') == 'user-search':
+
+        search_term = request.args.get('q', '')
+
+        results = crud.search_for_user(search_term)
+
+        if not results:
+
+            results = 'no users'
+
+            return render_template('user_search.html',
+                                   results=results)
+
+        else:
+            users = []
+
+            for obj in results:
+
+                month_year = obj.created_on.strftime("%B %Y")
+
+                user = {'username': obj.username,
+                        'created_on': month_year}
+                users.append(user)
+
+            return render_template('user_search.html',
+                                   results=users)
 
 
 @app.route('/podcast/<id>')
@@ -183,10 +248,16 @@ def show_podcast_details(id):
     else:
         tag = 'No'
 
+    if session:
+        collections = session['collections']
+    else:
+        collections = None
+
     return render_template('podcast_details.html',
                            podcast=pod,
                            explicit=tag,
-                           reviews=reviews)
+                           reviews=reviews,
+                           collections=collections)
 
 
 @app.route('/review', methods=['POST'])
@@ -216,6 +287,16 @@ def submit_podcast_review():
     return redirect(f'/podcast/{podcast_id}')
 
 
+@app.route('/addcollection', methods=['POST'])
+def create_new_collection():
+    """Adds a new collection for the user."""
+
+    user_collection = session['collections']
+    name = request.form['collection-name']
+
+    crud.create_collection(user_collection, name)
+
+
 @app.route('/logout')
 def log_user_out():
     """Logs user out of their account."""
@@ -223,6 +304,12 @@ def log_user_out():
     session.clear()
     flash('You have been signed out.')
     return redirect('/')
+
+
+@app.before_request
+def before_request():
+    if 'localhost' in request.host_url or '0.0.0.0' in request.host_url:
+        app.jinja_env.cache = {}
 
 
 if __name__ == '__main__':

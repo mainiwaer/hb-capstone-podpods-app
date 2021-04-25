@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Podder{% endblock %}
+
+{% block header %}Podcast Review Site{% endblock %}
+
+{% block content %}
+    <h3>User Results:</h3>
+    {% if results == 'no users' %}
+        <p>Sorry, we could not find any users with that username.</p>
+
+    {% else %}
+
+        {% for user in results %}
+            <li class="list-group-item list-group-item-action">
+                <div style="display: inline">
+                    <a href="/user/{{ user['username'] }}">
+                        <h4>{{ user['username']}}</h4>
+                    </a> 
+                    <p>User Since: {{ user['created_on'] }}</p>
+                </div>
+
+            </li>
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

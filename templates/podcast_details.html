@@ -15,13 +15,28 @@
 
         <div>
             {{ podcast['description'] }} 
-        </div>
+        </div>`
         <div>
-            Language:{{ podcast['language'] }}  Explicit Content:{{ explicit }}  Total Episodes:{{ podcast['total_episodes'] }} <a href="{{ podcast['website'] }}">Website</a> 
+            Language: {{ podcast['language'] }}&nbsp;&nbsp;&nbsp;&nbsp;
+            Explicit Content: {{ explicit }}&nbsp;&nbsp;&nbsp;&nbsp;
+            Total Episodes: {{ podcast['total_episodes'] }}&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{{ podcast['website'] }}">Website</a> &nbsp;&nbsp;&nbsp;&nbsp;
         </div>
-        <div>
-
-        </div>
+        {% if session %}
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Add To Collection
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                {% if collections != None %}
+                    {% for collection_id, name in collections.items() %}
+                        <li><a class="dropdown-item" id="existing collection" value="{{ collection_id }}">{{ name }}</li>
+                    {% endfor %}
+                {% endif %}
+                <li><a class="dropdown-item" id="new-collection">Add To New Collection</a></li>
+            </ul>
+          </div>
+        {% endif %}
     </div>
     <br style="clear:both"/>
     <div>
@@ -31,10 +46,30 @@
                 <li class="list-group-item list-group-item-action">
                     <div>
                         <h5>{{ ep['title'] }}</h5>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ep-description">
+                            Read Description
+                        </button>
+
+                          <div class="modal fade" id="ep-description" tabindex="-1" aria-labelledby="ep-description" aria-hidden="true" >
+                            <div class="modal-dialog modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">{{ ep['title'] }}</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>{{ ep['description']}}</p>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
                     </div>
                     <div> 
                         <audio controls src="{{ep['audio']}}">hehe</audio>
-                        
                     </div>
                 </li>
             {% endfor %}
@@ -47,13 +82,15 @@
             {% for review in reviews %}
                 <li class="list-group-item list-group-item-action">
                     <div>
-                        {{ review.user.username }} said:
+                        <a href="/user/{{ review.user.username }}">{{ review.user.username }}</a> said:
                     </div>
                     <div>
                         {{ review.review_text }}
                     </div>
                 </li>
             {% endfor %}
+        {% else %}
+        <p>Add the first review!</p>
         {% endif %}
     </div>
     <div>
