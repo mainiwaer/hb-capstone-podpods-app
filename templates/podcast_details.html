@@ -22,23 +22,46 @@
             Total Episodes: {{ podcast['total_episodes'] }}&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="{{ podcast['website'] }}">Website</a> &nbsp;&nbsp;&nbsp;&nbsp;
         </div>
+
         {% if session %}
-        <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              Add To Collection
+                Add To Collection
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                {% if collections != None %}
-                    {% for collection_id, name in collections.items() %}
-                        <li><a class="dropdown-item" id="existing collection" value="{{ collection_id }}">{{ name }}</li>
-                    {% endfor %}
-                {% endif %}
-                <li><a class="dropdown-item" id="new-collection">Add To New Collection</a></li>
-            </ul>
-          </div>
-        {% endif %}
+                <div class="dropdown-menu">
+
+                    <form class="px-4 py-3" action="/addtocollection" method="POST">
+                        <div class="form-group">
+                            <label for="addToCollection">Select A Collection:</label>
+                            <select class="form-control" name="collection-id" id="exampleFormControlSelect1">
+                                {% for collection_id, name in collections.items() %}
+                                    <option value="{{ collection_id }}">{{ name }}</option>
+                                {% endfor %} 
+                            </select>             
+                            <input type="hidden" value="{{ podcast.id }}" name="podcast-id">
+                            <input type="hidden" value="{{ podcast['title'] }}" name="podcast-title">
+                            <input type="hidden" value="{{ podcast['thumbnail'] }}" name="podcast-cover">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+
+                    <form class="px-4 py-3" action="/addtonewcollection" method="POST">
+                        <div class="form-group">
+                            <label for="addCollection">Add To New Collection:</label>
+                            <input class="form-control" input-type="text" name="new-collection-name" placeholder="New Collection Name">
+                            <input type="hidden" value="{{ podcast.id }}" name="podcast-id">
+                            <input type="hidden" value="{{ podcast['title'] }}" name="podcast-title">
+                            <input type="hidden" value="{{ session['email'] }}" name="user-email">
+                            <input type="hidden" value="{{ podcast['thumbnail'] }}" name="podcast-cover">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+
+                </div>
+        {% endif%}
     </div>
+
     <br style="clear:both"/>
+
     <div>
         <h5>Recent Episodes:</h5>
         <div style="width:700px;height:150px;overflow:scroll;padding:5px">
@@ -97,6 +120,7 @@
         <h5>Add Your Own Review:</h5>
         <form action="/review" method="POST">
             <input type="hidden" value="{{ podcast.id }}" name="podcast-id">
+            <input type="hidden" value="{{ podcast['thumbnail'] }}" name="podcast-cover">
             <input type="hidden" value="{{ podcast['title'] }}" name="podcast-title">
             <input type="hidden" value="{{ session['email']| default('no user') }}" name="user-email">
             <div>
@@ -110,7 +134,7 @@
                 </select>
             </div>
             <div>
-                <textarea name="review-text"></textarea>
+                <textarea style="width:700px" name="review-text"></textarea>
             </div>
         <input type="submit" href="/review">
     </div>

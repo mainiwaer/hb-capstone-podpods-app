@@ -20,3 +20,13 @@ footer {
   word-wrap: break-word;
 }
 
+#profile {
+  height: 200px;
+  width: 200px
+}
+
+.container {
+  width: 200px;
+  height: 200px;
+  align-content:flex-start ;
+}

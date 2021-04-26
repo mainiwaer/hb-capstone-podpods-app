@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Podcast, Review, Collection
+from model import db, User, Podcast, Review, Collection, UserFriendship
 from model import CollectionPodcasts, connect_to_db
 
 if __name__ == '__main__':
@@ -8,13 +8,15 @@ if __name__ == '__main__':
     connect_to_db(app)
 
 
-def create_user(username, email, password, created_on):
+def create_user(username, email, password, created_on, profile_picture, user_bio):
     """Create and return a new user."""
 
     user = User(username=username,
                 email=email,
                 password=password,
-                created_on=created_on)
+                created_on=created_on,
+                profile_picture=profile_picture,
+                user_bio=user_bio)
 
     db.session.add(user)
     db.session.commit()
@@ -38,6 +40,12 @@ def get_user_by_email(email):
     """Return a user by email."""
 
     return User.query.filter(User.email == email).first()
+
+
+def get_user_by_user_id(user_id):
+    """Return a user by user id."""
+
+    return User.query.filter(User.user_id == user_id).first()
 
 
 def check_user_password_by_email(email, password):
@@ -90,6 +98,8 @@ def create_review(user, podcast, review_text, score):
     db.session.add(review)
     db.session.commit()
 
+    return review
+
 
 def create_collection(user_collection, name):
     """Creates a collection of podcasts for a user."""
@@ -105,8 +115,7 @@ def create_collection(user_collection, name):
 def get_collection_by_id(collection_id):
     """Returns a collection by its id."""
 
-    return Collection.query.filter(Collection.collection_id ==
-                                   collection_id).first()
+    return Collection.query.filter(Collection.collection_id == collection_id).first()
 
 
 def add_to_podcast_collection(collection, podcast):
@@ -117,3 +126,19 @@ def add_to_podcast_collection(collection, podcast):
 
     db.session.add(collection_podcasts)
     db.session.commit()
+
+    return collection_podcasts
+
+
+def become_friends(user, friend):
+    """Adds friendship with another user."""
+
+    friendship_1 = UserFriendship(user=user,
+                                  friend=friend)
+    db.sessions.add(friendship_1)
+    db.sesion.commit()
+
+    friendship_2 = UserFriendship(friend=friend,
+                                  user=user)
+    db.sessions.add(friendship_2)
+    db.sesion.commit()

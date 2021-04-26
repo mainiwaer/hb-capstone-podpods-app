@@ -7,6 +7,13 @@
 {% block content %}
 <div>
     <h4>Hello, {{ user }}!</h4>
+    <p>
+        <div>
+            <img src="{{ profile_picture }}" id="profile">
+        </div>
+        member since:{{ created_on }}
+        {{ user_bio }}
+    </p>
     <div><h5>Here are your recent reviews:</h5></div>
 
     {% for review in reviews %}

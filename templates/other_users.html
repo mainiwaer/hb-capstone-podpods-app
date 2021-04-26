@@ -5,8 +5,26 @@
 {% block header %}Podcast Review Site{% endblock %}
 
 {% block content %}
-<div>
     <h4>{{ user }}'s Profile</h4>
+    <div>
+        <img src="{{ profile_picture }}" id="profile">
+    </div>
+    <p>
+        Member Since:{{ created_on }}
+    </p>
+    <p>
+        <b>User Bio: </b>{{ user_bio }}
+    </p>
+
+    {% if session %}
+        <form action="/addfriend" method="POST">
+            <input type="hidden" value="{{ user }}" name="friend-username">
+            <input type="hidden" value="{{ session['email'] }}" name="user-email">
+            <input type="hidden" value="{{ profile_user_id }}" name="friend-id">
+            <button type="submit">Add Friend</button>
+        </form>
+    {% endif %}
+
     <div><h5>{{ user }}'s recent reviews:</h5></div>
 
     {% for review in reviews %}
@@ -18,7 +36,9 @@
             </div>
         </li>
     {% endfor %}
+
     <div><h5>{{ user }}'s Collections</h5></div>
+
     {% for collection in collections %}
         <div style="margin-bottom: 10px;">
             <h5>{{ collection.name }}</h5>
@@ -35,9 +55,9 @@
                     </a> 
                 </div>
             {% endfor %}
+            
         </div>
         <br style="clear:both"/>
     {% endfor %}
-</div>
 
 {% endblock %}

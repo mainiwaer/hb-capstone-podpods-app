@@ -47,8 +47,15 @@ for n in range(10):
     email = f'listener{n}@podcast.com'
     password = 'rest'
     created_on = datetime.now()
+    profile_picture = '/static/images/anon_whale.png'
+    user_bio = 'I love Podcasts'
 
-    new_user = crud.create_user(username, email, password, created_on)
+    new_user = crud.create_user(username,
+                                email,
+                                password,
+                                created_on,
+                                profile_picture,
+                                user_bio)
 
     for p in range(5):
         random_podcast = choice(podcasts_in_db)

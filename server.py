@@ -2,6 +2,8 @@
 
 import requests
 
+from random import choice
+
 from flask import (Flask, request, render_template,
                    flash, session, redirect, Markup)
 
@@ -44,6 +46,40 @@ def show_hot_podcasts():
     return render_template('hot_podcasts.html', podcasts=podcasts)
 
 
+@app.route('/recommended')
+def give_user_random_podcast_rec():
+    """Give a user a random podcast recommendation based on their collection."""
+
+    if session:
+        if session['collections']:
+
+            collection_list = sorted(session['collections'])
+
+            random_collection_id = choice(collection_list)
+
+            random_collection = crud.get_collection_by_id(random_collection_id)
+
+            reference_pod_id = choice(random_collection.collection_podcasts).podcast_id
+
+        else:
+            reference_pod_id = choice(crud.get_hot_pods()).podcast_id
+
+    else:
+        reference_pod_id = choice(crud.get_hot_pods()).podcast_id
+    print('HELLOOOOOOOOOOOOOOOOOOO')
+    print(reference_pod_id)
+    url = f'https://listen-api.listennotes.com/api/v2/podcasts/{reference_pod_id}/recommendations?safe_mode=0'
+
+    headers = {'X-ListenAPI-Key': API_KEY}
+
+    response = requests.request('GET', url, headers=headers)
+
+    results = response.json()['recommendations']
+
+    return render_template('recommendations.html',
+                           result=results)
+
+
 @app.route('/signup')
 def show_sign_up_page():
     """Show user sign up page."""
@@ -58,6 +94,8 @@ def register_user():
     email = request.form['email']
     password = request.form['password']
     created_on = datetime.now()
+    profile_picture = '/static/images/anon_whale.png'
+    user_bio = ''
 
     username_check = crud.get_user_by_username(username)
     email_check = crud.get_user_by_email(email)
@@ -71,7 +109,13 @@ def register_user():
         return redirect('/signup')
 
     else:
-        crud.create_user(username, email, password, created_on)
+        crud.create_user(username,
+                         email,
+                         password,
+                         created_on,
+                         profile_picture,
+                         user_bio)
+
         flash(Markup('Account created! Please \
                      <a href="/signin"class="alert-link">Sign In</a>'))
         return redirect('/signup')
@@ -123,6 +167,9 @@ def show_user_profile():
     account = crud.get_user_by_email(email)
     user_reviews = account.reviews
     user_collections = account.collections
+    user_profile_picture = account.profile_picture
+    user_bio = account.user_bio
+    created_on = account.created_on
 
     user_collections_pods = {}
 
@@ -144,6 +191,9 @@ def show_user_profile():
                            user=user,
                            email=email,
                            reviews=user_reviews,
+                           profile_picture=user_profile_picture,
+                           user_bio=user_bio,
+                           created_on=created_on,
                            collections=user_collections,
                            collections_details=user_collections_pods)
 
@@ -155,6 +205,10 @@ def show_other_user_profile(username):
     account = crud.get_user_by_username(username)
     reviews = account.reviews
     collections = account.collections
+    profile_picture = account.profile_picture
+    user_bio = account.user_bio
+    created_on = account.created_on
+    user_id = account.user_id
 
     collection_names = {}
     collections_pods = {}
@@ -174,8 +228,30 @@ def show_other_user_profile(username):
     return render_template('other_users.html',
                            user=username,
                            reviews=reviews,
+                           profile_picture=profile_picture,
+                           user_bio=user_bio,
+                           created_on=created_on,
                            collections=collections,
-                           collections_details=collections_pods)
+                           collections_details=collections_pods,
+                           profile_user_id=user_id)
+
+
+@app.route('/addfriend', methods=['POST'])
+def add_another_user_as_friend():
+    """Adds another user as a friend."""
+
+    friend_username = request.form['friend-username']
+    user_email = request.form['user-email']
+    friend_id = request.form['friend-id']
+
+    friend_user = crud.get_user_by_user_id(friend_id)
+    current_user = crud.get_user_by_email(user_email)
+
+    crud.become_friends(current_user, friend_user)
+
+    flash(f'You have become friends with {friend_username}!')
+
+    return redirect(f'/user/{friend_username}')
 
 
 @app.route('/search')
@@ -249,7 +325,10 @@ def show_podcast_details(id):
         tag = 'No'
 
     if session:
-        collections = session['collections']
+        if session.get('collections', 0) == 0:
+            collections = None
+        else:
+            collections = session['collections']
     else:
         collections = None
 
@@ -267,6 +346,7 @@ def submit_podcast_review():
     email = request.form['user-email']
     podcast_id = request.form['podcast-id']
     podcast_name = request.form['podcast-title']
+    cover = request.form['podcast-cover']
     score = request.form['score']
     review = request.form['review-text']
 
@@ -275,7 +355,7 @@ def submit_podcast_review():
         return redirect(f'/podcast/{podcast_id}')
 
     if crud.get_podcast_by_id(podcast_id) is None:
-        crud.create_podcast(podcast_id, podcast_name)
+        crud.create_podcast(podcast_id, podcast_name, cover)
 
     user = crud.get_user_by_email(email)
     podcast = crud.get_podcast_by_id(podcast_id)
@@ -287,14 +367,70 @@ def submit_podcast_review():
     return redirect(f'/podcast/{podcast_id}')
 
 
-@app.route('/addcollection', methods=['POST'])
+@app.route('/addtonewcollection', methods=['POST'])
 def create_new_collection():
     """Adds a new collection for the user."""
 
-    user_collection = session['collections']
-    name = request.form['collection-name']
+    email = request.form['user-email']
+    user = crud.get_user_by_email(email)
 
-    crud.create_collection(user_collection, name)
+    name = request.form['new-collection-name']
+
+    new_collection = crud.create_collection(user, name)
+
+    podcast_id = request.form['podcast-id']
+    podcast_name = request.form['podcast-title']
+    podcast_cover = request.form['podcast-cover']
+
+    if crud.get_podcast_by_id(podcast_id) is None:
+        crud.create_podcast(podcast_id, podcast_name, podcast_cover)
+
+    podcast = crud.get_podcast_by_id(podcast_id)
+
+    crud.add_to_podcast_collection(new_collection, podcast)
+
+    flash(f'Added {podcast_name} to {new_collection.name}!')
+
+    redirect('/user-profile')
+
+    return redirect(f'/podcast/{podcast_id}')
+
+
+@app.route('/addtocollection', methods=['POST'])
+def add_podcast_to_user_collections():
+    """Adds a podcast to a user's collection"""
+
+    collection_id = request.form['collection-id']
+    podcast_id = request.form['podcast-id']
+    podcast_name = request.form['podcast-title']
+    podcast_cover = request.form['podcast-cover']
+
+    if crud.get_podcast_by_id(podcast_id) is None:
+        crud.create_podcast(podcast_id, podcast_name, podcast_cover)
+
+    collection = crud.get_collection_by_id(collection_id)
+    podcast = crud.get_podcast_by_id(podcast_id)
+
+    crud.add_to_podcast_collection(collection, podcast)
+
+    flash(f'Added {podcast_name} to {collection.name}!')
+
+    return redirect(f'/podcast/{podcast_id}')
+
+
+@app.route('/delete-review', methods=['POST'])
+def delete_review():
+    """Deletes user's review."""
+
+
+@app.route('/remove-from-collection', methods=['POST'])
+def remove_podcast_from_collection():
+    """Removes a podcast from a user's collection."""
+
+
+@app.route('/delete-collection', methods=['POST'])
+def delete_collection():
+    """Deletes a user's a collection"""
 
 
 @app.route('/logout')
@@ -306,10 +442,11 @@ def log_user_out():
     return redirect('/')
 
 
-@app.before_request
-def before_request():
-    if 'localhost' in request.host_url or '0.0.0.0' in request.host_url:
-        app.jinja_env.cache = {}
+@app.route('/about')
+def about_page():
+    """Renders about page."""
+
+    return render_template('about.html')
 
 
 if __name__ == '__main__':

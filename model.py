@@ -41,10 +41,45 @@ class User(db.Model):
     email = db.Column(db.String)
     created_on = db.Column(db.DateTime)
 
+    profile_picture = db.Column(db.String)
+    user_bio = db.Column(db.Text)
+
     pod_collection = db.relationship("Collection", backref='users')
+
+    # current_user = db.relationship('UserFriendship',
+    #                                backref='users',
+    #                                foreign_keys='UserFriendship.current_user_id')
+
+    # friends = db.relationship('UserFriendship',
+    #                           backref='users',
+    #                           foreign_keys='UserFriendship.friend_id')
 
     def __repr__(self):
         return f'User id={self.user_id} username={self.username}'
+
+
+class UserFriendship():
+    """A friendship between two users."""
+
+    __tablename__ = 'users_friends'
+
+    user_friend_id = db.Column(db.Integer,
+                               autoincrement=True,
+                               primary_key=True)
+
+    current_user_id = db.Column(db.Integer,
+                                db.ForeignKey('users.user_id'),
+                                nullable=False)
+
+    friend_id = db.Column(db.Integer,
+                          db.ForeignKey('users.user_id'),
+                          nullable=False)
+
+    # current_user = db.relationship('UserFriendship', backref='users_friends')
+    # friend = db.relationship('UserFriendship', backref='users_friends')
+
+    def __repr__(self):
+        return f'UserFriendship user_id={self.current_user_id} friend_id={self.friend_id}'
 
 
 class Podcast(db.Model):
