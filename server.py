@@ -66,8 +66,7 @@ def give_user_random_podcast_rec():
 
     else:
         reference_pod_id = choice(crud.get_hot_pods()).podcast_id
-    print('HELLOOOOOOOOOOOOOOOOOOO')
-    print(reference_pod_id)
+
     url = f'https://listen-api.listennotes.com/api/v2/podcasts/{reference_pod_id}/recommendations?safe_mode=0'
 
     headers = {'X-ListenAPI-Key': API_KEY}

@@ -46,19 +46,19 @@ class User(db.Model):
 
     pod_collection = db.relationship("Collection", backref='users')
 
-    # current_user = db.relationship('UserFriendship',
-    #                                backref='users',
-    #                                foreign_keys='UserFriendship.current_user_id')
+    added_friends = db.relationship('UserFriendship',
+                                    backref='current_user_friends',
+                                    foreign_keys='UserFriendship.current_user_id')
 
-    # friends = db.relationship('UserFriendship',
-    #                           backref='users',
-    #                           foreign_keys='UserFriendship.friend_id')
+    friended_by = db.relationship('UserFriendship',
+                                  backref='current_user_friended_by',
+                                  foreign_keys='UserFriendship.friend_id')
 
     def __repr__(self):
         return f'User id={self.user_id} username={self.username}'
 
 
-class UserFriendship():
+class UserFriendship(db.Model):
     """A friendship between two users."""
 
     __tablename__ = 'users_friends'
@@ -74,9 +74,6 @@ class UserFriendship():
     friend_id = db.Column(db.Integer,
                           db.ForeignKey('users.user_id'),
                           nullable=False)
-
-    # current_user = db.relationship('UserFriendship', backref='users_friends')
-    # friend = db.relationship('UserFriendship', backref='users_friends')
 
     def __repr__(self):
         return f'UserFriendship user_id={self.current_user_id} friend_id={self.friend_id}'
@@ -106,6 +103,9 @@ class Review(db.Model):
                           primary_key=True)
     score = db.Column(db.Integer)
     review_text = db.Column(db.Text)
+    # hashtags = db.Column(db.String)
+    # episode_recommendation = db.Column(db.String)
+
     podcast_id = db.Column(db.String,
                            db.ForeignKey('podcasts.podcast_id'),
                            nullable=False)

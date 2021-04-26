@@ -5,5 +5,19 @@
 {% block header %}Podcast Review Site{% endblock %}
 
 {% block content %}
+<h5>Advanced Search:</h5>
+
+<form method="GET" action="/search">
+    <input type="radio" name="search-type" value="user-search">
+    <label>users</label>
+    <input type="radio" name="search-type" value="podcast-search" checked>
+    <label>podcasts</label>
+    <input type="text" name="q">
+    <!-- <select name="genre">
+        <option value></option>
+    </select> -->
+    <input type="submit" value="search">
+  </form>
+
 
 {% endblock %}
