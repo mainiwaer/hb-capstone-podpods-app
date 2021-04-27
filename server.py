@@ -243,10 +243,9 @@ def add_another_user_as_friend():
     user_email = request.form['user-email']
     friend_id = request.form['friend-id']
 
-    friend_user = crud.get_user_by_user_id(friend_id)
-    current_user = crud.get_user_by_email(user_email)
+    current_user_id = crud.get_user_by_email(user_email).user_id
 
-    crud.become_friends(current_user, friend_user)
+    crud.become_friends(current_user_id, friend_id)
 
     flash(f'You have become friends with {friend_username}!')
 

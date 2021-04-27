@@ -88,6 +88,12 @@ def get_reviews_by_podcast_id(podcast_id):
     return Review.query.filter(Review.podcast_id == podcast_id).all()
 
 
+# def get_users_friends(user_id):
+#     """Return a list of the active user's friends."""
+
+#     return User.query.filter(User.user_id == user_id).all()
+
+
 def create_review(user, podcast, review_text, score):
 
     review = Review(user=user,
@@ -130,15 +136,31 @@ def add_to_podcast_collection(collection, podcast):
     return collection_podcasts
 
 
-def become_friends(user, friend):
+def become_friends(user_id, friend_id):
     """Adds friendship with another user."""
 
-    friendship_1 = UserFriendship(user=user,
-                                  friend=friend)
-    db.sessions.add(friendship_1)
-    db.sesion.commit()
+    friendship_1 = UserFriendship(current_user_id=user_id,
+                                  friend_id=friend_id)
+    db.session.add(friendship_1)
+    db.session.commit()
 
-    friendship_2 = UserFriendship(friend=friend,
-                                  user=user)
-    db.sessions.add(friendship_2)
-    db.sesion.commit()
+    friendship_2 = UserFriendship(current_user_id=friend_id,
+                                  friend_id=user_id)
+    db.session.add(friendship_2)
+    db.session.commit()
+
+
+def remove_friend(user_id, friend_id):
+    """Removes friendship with another user"""
+
+    to_remove_1 = db.session.query(UserFriendship).filter_by(current_user_id=user_id,
+                                                             friend_id=friend_id).all()
+    for friend in to_remove_1:
+        db.session.delete(friend)
+        db.session.commit()
+
+    to_remove_2 = db.session.query(UserFriendship).filter_by(current_user_id=friend_id,
+                                                             friend_id=user_id).all()
+    for friend in to_remove_2:
+        db.session.delete(friend)
+        db.session.commit()
