@@ -5,24 +5,6 @@ body {
   background: rgb(152, 210, 233);
 }
 
-
-/*Footer Styles*/
-
- .footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
-  background-color: #00A8E0;
-  text-align: center;
-}
-
-footer.dark {
-  background-color: #4B4C54;
-}
-/* End Footer */
-
 .modal-body p {
   word-wrap: break-word;
 }
@@ -41,10 +23,10 @@ footer.dark {
 /* Carousel */
 .cascade-slider_container {
   position: relative;
-  width: 1200px;
+  width: auto;
   height: 250px;
   margin: 25px auto;
-  padding-top: 150px;
+  padding-top: 400px;
 }
 
 .cascade-slider_item {
@@ -119,3 +101,19 @@ footer.dark {
 .cascade-slider_dot.cur { background: #555; }
 /* End Carousel */
 
+/*Footer Styles*/
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #00A8E0;
+  text-align: center;
+}
+
+footer.dark {
+  background-color: #4B4C54;
+}
+/* End Footer */
