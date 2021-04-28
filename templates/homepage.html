@@ -5,7 +5,29 @@
 {% block header %}Podcast Review Site{% endblock %}
 
 {% block content %}
-  <h2>Welcome to the site!</h2>
+<div></div>
+
+<div class="container-fluid">
+  <div class="cascade-slider_container" id="cascade-slider">
+    <div class="cascade-slider_slides">
+      {% for podcast in podcasts %}
+        <div class="cascade-slider_item">
+          <a href="podcast/{{ podcast.podcast_id }}"><img src="{{ podcast.cover }}" alt=""></a>
+        </div>
+      {% endfor %}
+      <div class="cascade-slider_item">
+
+    <ol class="cascade-slider_nav">
+      <li class="cascade-slider_dot cur"></li>
+
+      <li class="cascade-slider_dot"></li>
+    </ol>
+
+    <span class="cascade-slider_arrow cascade-slider_arrow-left" data-action="prev">Prev</span>
+    <span class="cascade-slider_arrow cascade-slider_arrow-right" data-action="next">Next</span>
+  </div>
+</div>
+
   <h3>Navigation:</h3>
   <ul>
     <li><a href="/hot">View Current Hot Podcasts</a></li>
