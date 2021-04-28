@@ -41,6 +41,8 @@ for podcast in test_podcast_data:
 
     podcasts_in_db.append(db_podcast)
 
+all_users = []
+
 for n in range(10):
 
     username = f'listener{n}'
@@ -56,6 +58,8 @@ for n in range(10):
                                 created_on,
                                 profile_picture,
                                 user_bio)
+
+    all_users.append(new_user)
 
     for p in range(5):
         random_podcast = choice(podcasts_in_db)
@@ -73,3 +77,7 @@ for n in range(10):
             random_podcast = choice(podcasts_in_db)
             crud.add_to_podcast_collection(collect,
                                            random_podcast)
+
+
+for user in all_users:
+    crud.become_friends(user.user_id, choice(range(9)))

@@ -20,7 +20,8 @@ from jinja2 import StrictUndefined
 os.system("source secrets.sh")
 
 app = Flask(__name__)
-app.secret_key = b'\x0c\xc8#\xf1TCJ\xfa\xa3F\xfc\x9e\xf4{\xe6\xd7'
+os.environ["FLASK_KEY"]
+app.secret_key = os.environ["FLASK_KEY"]
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 # os.environ["FLASK_KEY"]
@@ -34,7 +35,9 @@ API_KEY = os.environ["LISTENNOTES_KEY"]
 def show_homepage():
     """View homepage."""
 
-    return render_template('homepage.html')
+    podcasts = crud.get_hot_pods()
+
+    return render_template('homepage.html', podcasts=podcasts)
 
 
 @app.route('/hot')
@@ -170,6 +173,13 @@ def show_user_profile():
     user_bio = account.user_bio
     created_on = account.created_on
 
+    user_friends = []
+    user_friendships = account.added_friends
+    for friendship in user_friendships:
+        user_friend_id = friendship.friend_id
+        friend_account = crud.get_user_by_user_id(user_friend_id)
+        user_friends.append(friend_account)
+
     user_collections_pods = {}
 
     session['collections'] = {}
@@ -192,6 +202,7 @@ def show_user_profile():
                            reviews=user_reviews,
                            profile_picture=user_profile_picture,
                            user_bio=user_bio,
+                           friends=user_friends,
                            created_on=created_on,
                            collections=user_collections,
                            collections_details=user_collections_pods)
