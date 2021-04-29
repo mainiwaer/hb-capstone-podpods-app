@@ -1,8 +1,26 @@
 body {
-  font-family: system-ui;
+  font-family: sans-serif Arial;
   display: flex;
   flex-direction: column;
-  background: rgb(152, 210, 233);
+  background: rgb(255, 255, 255);
+}
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 2.5rem;    /* Footer height */
+}
+
+#search-select {
+    width: 21px;
+}
+
+nav {
+    height:75px;
+    background-color: rgb(161, 225, 255);
 }
 
 .modal-body p {
@@ -17,103 +35,25 @@ body {
 .container {
   width: 200px;
   height: 200px;
-  align-content:flex-start ;
+  align-content:flex-start; 
+  flex: 1 1 auto;
 }
-
-/* Carousel */
-.cascade-slider_container {
-  position: relative;
-  width: auto;
-  height: 250px;
-  margin: 25px auto;
-  padding-top: 400px;
-}
-
-.cascade-slider_item {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%) scale(0.3);
-  transition: all 1s ease;
-  opacity: 0;
-  z-index: -1;
-  text-align: center;
-}
-.cascade-slider_item img {
-  width: 400px;
-}
-
-.cascade-slider_item.next {
-  left: 50%;
-  transform: translateY(-50%) translateX(-150%) scale(0.6);
-  opacity: 1;
-  z-index: 1;
-}
-
-.cascade-slider_item.prev {
-  left: 50%;
-  transform: translateY(-50%) translateX(50%) scale(0.6);
-  opacity: 1;
-  z-index: 1;
-}
-
-.cascade-slider_item.now {
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%) scale(1);
-  opacity: 1;
-  z-index: 5;
-}
-
-.cascade-slider_arrow {
-  display: inline-block;
-  position: absolute;
-  top: 50%;
-  cursor: pointer;
-  z-index: 5;
-  
-}
-
-.cascade-slider_arrow-left { left: 0; }
-
-.cascade-slider_arrow-right { right: 0; }
-
-.cascade-slider_nav {
-  position: absolute;
-  bottom: -120px;
-  width: 100%;
-  text-align: center;
-  z-index: 5;
-}
-
-.cascade-slider_dot {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  margin: 1em;
-  background: #ddd;
-  list-style: none;
-  cursor: pointer;
-}
-
-.cascade-slider_dot:hover { background: #555; }
-
-.cascade-slider_dot.cur { background: #555; }
-/* End Carousel */
 
 /*Footer Styles*/
 
 .footer {
-  position: absolute;
-  right: 0;
+  position:absolute;
+  width: 100%;
   bottom: 0;
-  left: 0;
-  padding: 1rem;
+
+  height: 2.5rem;
   background-color: #00A8E0;
   text-align: center;
+
 }
 
-footer.dark {
-  background-color: #4B4C54;
-}
 /* End Footer */
+
+/* Navbar */
+
+/* End Navbar */

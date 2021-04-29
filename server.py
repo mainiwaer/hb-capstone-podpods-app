@@ -36,8 +36,10 @@ def show_homepage():
     """View homepage."""
 
     podcasts = crud.get_hot_pods()
-
-    return render_template('homepage.html', podcasts=podcasts)
+    slider_dots = len(podcasts) - 1
+    return render_template('homepage.html',
+                           podcasts=podcasts,
+                           slider_dots=slider_dots)
 
 
 @app.route('/hot')

@@ -5,38 +5,14 @@
 {% block header %}Podcast Review Site{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
 
-</div>
-
-<div class="container-fluid">
-  <div class="col-12">
-      <div class="cascade-slider_container" id="cascade-slider">
-        <div class="cascade-slider_slides">
-          {% for podcast in podcasts %}
-            <div class="cascade-slider_item">
-              <a href="podcast/{{ podcast.podcast_id }}"><img src="{{ podcast.cover }}" alt=""></a>
-            </div>
-          {% endfor %}
-        <ol class="cascade-slider_nav">
-          <li class="cascade-slider_dot cur"></li>
-          {% for podcast in podcasts %}
-          <li class="cascade-slider_dot"></li>
-          {% endfor %}
-        </ol>
-        <span style="font-size: 55px; color:#ff6c0a;" class="cascade-slider_arrow cascade-slider_arrow-left" data-action="prev"><i class="fas fa-arrow-circle-left"></i></span>
-        <span style="font-size: 55px; color:#ff6c0a;" class="cascade-slider_arrow cascade-slider_arrow-right" data-action="next"><i class="fas fa-arrow-circle-right"></i></span>
-      </div>
-    </div>
-  </div>
-</div>
-
-  <h3>Navigation:</h3>
-  <ul>
-    <li><a href="/hot">View Current Hot Podcasts</a></li>
-    <li><a href="/recommended">Random Recommendation!!</a></li>
-  </ul>
-
-  <p>Review it</p>
+    <form method="GET" action="/search">
+      <input type="radio" name="search-type" value="user-search">
+      <label>users</label>
+      <input type="radio" name="search-type" value="podcast-search" checked>
+      <label>podcasts</label>
+      <input type="text" name="q">
+      <input type="submit" value="search">
+    </form>
 
 {% endblock %}
