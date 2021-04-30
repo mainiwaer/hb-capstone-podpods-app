@@ -5,14 +5,47 @@
 {% block header %}Podcast Review Site{% endblock %}
 
 {% block content %}
+<header>
+    <!-- Jumbotron -->
+    <div class="p-5 text-center ">
+      <h1 class="mb-3">Heading</h1>
+      <h4 class="mb-3">Subheading</h4>
+      <a class="btn btn-primary" href="" role="button">Call to action</a>
+    </div>
+    <!-- Jumbotron -->
+</header>
 
-    <form method="GET" action="/search">
-      <input type="radio" name="search-type" value="user-search">
-      <label>users</label>
-      <input type="radio" name="search-type" value="podcast-search" checked>
-      <label>podcasts</label>
-      <input type="text" name="q">
-      <input type="submit" value="search">
-    </form>
+<section class="centering-content-demo container mt-4">
 
+  <div class="container-fluid">
+    <div id="carouselControls" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <a href="/podcast/{{ first_pod.podcast_id }}">
+            <img src="{{ first_pod.cover }}" style="width: 300px; height: 300px" class="d-block" alt="..."/>
+          </a>
+        </div>
+
+        {% for podcast in podcasts %}
+        <div class="carousel-item">
+          <a href="/podcast/{{ podcast.podcast_id }}">
+            <img src="{{ podcast.cover }}" style = "width: 300px; height: 300px; align-self: center;" class="d-block" alt="..."/>
+          </a>
+            </div>
+        {% endfor %}
+
+      </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+
+    </div>
+  </div>
+</section>
 {% endblock %}

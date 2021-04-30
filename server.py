@@ -35,11 +35,12 @@ API_KEY = os.environ["LISTENNOTES_KEY"]
 def show_homepage():
     """View homepage."""
 
-    podcasts = crud.get_hot_pods()
-    slider_dots = len(podcasts) - 1
+    podcasts = crud.get_hot_pods()[0:5]
+    first_pod = podcasts.pop(0)
+
     return render_template('homepage.html',
-                           podcasts=podcasts,
-                           slider_dots=slider_dots)
+                           first_pod=first_pod,
+                           podcasts=podcasts)
 
 
 @app.route('/hot')
@@ -153,6 +154,7 @@ def sign_user_in():
     if pw_check:
         session['email'] = email
         session['username'] = crud.get_user_by_email(email).username
+        session['profile_picture'] = crud.get_user_by_email(email).profile_picture
         return redirect('/user-profile')
     else:
         flash('Incorrect password. Please try again.')

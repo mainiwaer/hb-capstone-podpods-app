@@ -4,10 +4,13 @@ import os
 import json
 from random import choice, randint
 from datetime import datetime
+from faker import Faker
 
 import crud
 import model
 import server
+
+fake = Faker()
 
 os.system('dropdb pod')
 os.system('createdb pod')
@@ -45,26 +48,30 @@ all_users = []
 
 for n in range(10):
 
-    username = f'listener{n}'
-    email = f'listener{n}@podcast.com'
+    username = fake.simple_profile()['username']
+    email = f'{username}@podcast.com'
     password = 'rest'
     created_on = datetime.now()
     profile_picture = '/static/images/anon_whale.png'
-    user_bio = 'I love Podcasts'
+    user_bio = fake.sentence(nb_words=50)
+    website = fake.profile()['website']
+    birthday = fake.profile()['birthdate']
 
     new_user = crud.create_user(username,
                                 email,
                                 password,
                                 created_on,
                                 profile_picture,
-                                user_bio)
+                                user_bio,
+                                website,
+                                birthday)
 
     all_users.append(new_user)
 
     for p in range(5):
         random_podcast = choice(podcasts_in_db)
         score = randint(1, 5)
-        review_text = choice(REVIEW_TEXT)
+        review_text = fake.sentence(nb_words=80)
         crud.create_review(new_user, random_podcast, review_text, score)
 
     new_collection = crud.create_collection(new_user, "Top Favs")

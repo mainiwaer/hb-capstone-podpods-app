@@ -57,7 +57,11 @@
     <div><h5>Friends:</h5></div>
     {% if friends %}
         {% for friend in friends %}
-            <a href="/user/{{ friend.username }}">{{ friend.username }}</a>
+        
+            <a href="/user/{{ friend.username }}">
+                <img href="{{ friend.profile_picture }}">"
+                {{ friend.username }}
+            </a>
 
         {% endfor %}
     {% else %}

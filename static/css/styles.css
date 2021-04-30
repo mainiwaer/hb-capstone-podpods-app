@@ -2,7 +2,7 @@ body {
   font-family: sans-serif Arial;
   display: flex;
   flex-direction: column;
-  background: rgb(255, 255, 255);
+  background: rgb(197, 246, 255);
 }
 
 #page-container {
@@ -15,12 +15,21 @@ body {
 }
 
 #search-select {
-    width: 21px;
+  width: 21px;
+}
+
+.navbar-theme {
+
+  background: linear-gradient(to left, #f9d1d4, #d3cdec);
 }
 
 nav {
     height:75px;
-    background-color: rgb(161, 225, 255);
+    background: linear-gradient(to left, #d1e7f9, #ecdecd);
+}
+
+.mt-4, .my-4 {
+  margin-top: 1.5rem !important;
 }
 
 .modal-body p {
@@ -33,11 +42,10 @@ nav {
 }
 
 .container {
-  width: 200px;
-  height: 200px;
   align-content:flex-start; 
   flex: 1 1 auto;
 }
+
 
 /*Footer Styles*/
 
@@ -52,8 +60,13 @@ nav {
 
 }
 
-/* End Footer */
+.carousel-item img {
+  margin: auto;
 
-/* Navbar */
+}
 
-/* End Navbar */
+.carousel {
+  position: relative
+
+}
+

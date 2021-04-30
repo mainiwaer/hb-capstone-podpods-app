@@ -5,23 +5,24 @@
 {% block header %}Podcast Review Site{% endblock %}
 
 {% block content %}
-<div style="float:left">
-    <img src="{{ podcast['thumbnail'] }}">
+<div class="container-fluid" style="height: 400px;">
+    <div class="row">
+        <div class="col-md-auto" style="float:left">
+            <img src="{{ podcast['thumbnail'] }}">
+        </div>
+        <div class="col">
+            <h3>{{ podcast['title'] }}</h3>
+            <div>
+                {{ podcast['description'] }} 
+            </div>`
+            <div>
+                Language: {{ podcast['language'] }}&nbsp;&nbsp;&nbsp;&nbsp;
+                Explicit Content: {{ explicit }}&nbsp;&nbsp;&nbsp;&nbsp;
+                Total Episodes: {{ podcast['total_episodes'] }}&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{{ podcast['website'] }}">Website</a> &nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
 </div>
-<div>
-
-    <h3>{{ podcast['title'] }}</h3>
-
-    <div>
-        {{ podcast['description'] }} 
-    </div>`
-    <div>
-        Language: {{ podcast['language'] }}&nbsp;&nbsp;&nbsp;&nbsp;
-        Explicit Content: {{ explicit }}&nbsp;&nbsp;&nbsp;&nbsp;
-        Total Episodes: {{ podcast['total_episodes'] }}&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="{{ podcast['website'] }}">Website</a> &nbsp;&nbsp;&nbsp;&nbsp;
-    </div>
-
+</div>
     {% if session %}
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             Add To Collection

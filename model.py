@@ -43,6 +43,8 @@ class User(db.Model):
 
     profile_picture = db.Column(db.String)
     user_bio = db.Column(db.Text)
+    website = db.Column(db.String)
+    birthday = db.Column(db.DateTime)
 
     pod_collection = db.relationship("Collection", backref='users')
 

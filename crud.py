@@ -8,7 +8,14 @@ if __name__ == '__main__':
     connect_to_db(app)
 
 
-def create_user(username, email, password, created_on, profile_picture, user_bio):
+def create_user(username,
+                email,
+                password,
+                created_on,
+                profile_picture,
+                user_bio,
+                website,
+                birthday):
     """Create and return a new user."""
 
     user = User(username=username,
@@ -16,7 +23,9 @@ def create_user(username, email, password, created_on, profile_picture, user_bio
                 password=password,
                 created_on=created_on,
                 profile_picture=profile_picture,
-                user_bio=user_bio)
+                user_bio=user_bio,
+                website=website,
+                birthday=birthday)
 
     db.session.add(user)
     db.session.commit()
@@ -86,12 +95,6 @@ def get_reviews_by_podcast_id(podcast_id):
     """Return a review by podcast id."""
 
     return Review.query.filter(Review.podcast_id == podcast_id).all()
-
-
-# def get_users_friends(user_id):
-#     """Return a list of the active user's friends."""
-
-#     return User.query.filter(User.user_id == user_id).all()
 
 
 def create_review(user, podcast, review_text, score):
