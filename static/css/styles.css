@@ -2,7 +2,7 @@ body {
   font-family: sans-serif Arial;
   display: flex;
   flex-direction: column;
-  background: rgb(197, 246, 255);
+  background: linear-gradient(to left, rgb(255, 150, 119), #82c2ff, #ffc8f3);
 }
 
 #page-container {
@@ -18,13 +18,7 @@ body {
   width: 21px;
 }
 
-.navbar-theme {
-
-  background: linear-gradient(to left, #f9d1d4, #d3cdec);
-}
-
 nav {
-    height:75px;
     background: linear-gradient(to left, #d1e7f9, #ecdecd);
 }
 
@@ -53,9 +47,10 @@ nav {
   position:absolute;
   width: 100%;
   bottom: 0;
+  padding-top: 10;
 
-  height: 2.5rem;
-  background-color: #00A8E0;
+  height: 100px;
+  background: linear-gradient(to left, #d1e7f9, #ecdecd);
   text-align: center;
 
 }
@@ -70,3 +65,7 @@ nav {
 
 }
 
+.card-text p {
+  overflow: hidden;
+  max-width: 75ch;
+}

@@ -292,7 +292,8 @@ def show_search_results():
         search_result = response.json()['results']
 
         return render_template('search_results.html',
-                               result=search_result)
+                               result=search_result,
+                               keyword=keyword)
 
     if request.args.get('search-type', '') == 'user-search':
 
