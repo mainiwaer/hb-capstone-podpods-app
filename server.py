@@ -101,6 +101,8 @@ def register_user():
     created_on = datetime.now()
     profile_picture = '/static/images/anon_whale.png'
     user_bio = ''
+    website = ''
+    birthday = datetime.now()
 
     username_check = crud.get_user_by_username(username)
     email_check = crud.get_user_by_email(email)
@@ -119,7 +121,9 @@ def register_user():
                          password,
                          created_on,
                          profile_picture,
-                         user_bio)
+                         user_bio,
+                         website,
+                         birthday)
 
         flash(Markup('Account created! Please \
                      <a href="/signin"class="alert-link">Sign In</a>'))
