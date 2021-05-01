@@ -2,7 +2,7 @@ body {
   font-family: sans-serif Arial;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(to left, rgb(255, 150, 119), #82c2ff, #ffc8f3);
+  background-image: url("/static/images/bg-wide.png");
 }
 
 #page-container {
@@ -19,7 +19,7 @@ body {
 }
 
 nav {
-    background: linear-gradient(to left, #d1e7f9, #ecdecd);
+    background: rgba(245, 184, 122, 0.9);
 }
 
 .mt-4, .my-4 {
@@ -50,7 +50,7 @@ nav {
   padding-top: 10;
 
   height: 100px;
-  background: linear-gradient(to left, #d1e7f9, #ecdecd);
+  background:rgba(191, 102, 13, 0.5);
   text-align: center;
 
 }

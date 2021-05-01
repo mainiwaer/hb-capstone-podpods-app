@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Podder{% endblock %}
+
+{% block header %}Podcast Review Site{% endblock %}
+
+{% block content %}
+    <h3>Genres</h3>
+    <ul>
+        {% for genre in genres %}
+            <li>
+                <a href="/genre/{{ genre.genre_id }}">{{ genre.genre_name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

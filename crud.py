@@ -1,7 +1,7 @@
 """CRUD operations."""
 
 from model import db, User, Podcast, Review, Collection, UserFriendship
-from model import CollectionPodcasts, connect_to_db
+from model import CollectionPodcasts, Genre, connect_to_db
 
 if __name__ == '__main__':
     from server import app
@@ -79,6 +79,18 @@ def create_podcast(podcast_id, title, cover):
     return podcast
 
 
+def create_genre(genre_id, genre_name):
+    """Create and return a genre."""
+
+    genre = Genre(genre_id=genre_id,
+                  genre_name=genre_name)
+
+    db.session.add(genre)
+    db.session.commit()
+
+    return genre
+
+
 def get_podcast_by_id(podcast_id):
     """Return a Podcast by its id."""
 
@@ -89,6 +101,12 @@ def get_hot_pods():
     """Returns list of hot podcasts."""
 
     return Podcast.query.all()
+
+
+def get_genres():
+    """Returns list of all genres."""
+
+    return Genre.query.all()
 
 
 def get_reviews_by_podcast_id(podcast_id):

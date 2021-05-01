@@ -27,6 +27,15 @@ REVIEW_TEXT = [
     "LOLLLLL this is so funny I'm gonna tell all my friends"
 ]
 
+with open('data/genres.json') as f:
+    genres = json.loads(f.read())
+
+for genre in genres:
+    genre_id, genre_name = (genre['id'],
+                            genre['name'])
+
+    db_genre = crud.create_genre(genre_id=genre_id,
+                                 genre_name=genre_name)
 
 with open('data/mock_podcast.json') as f:
     test_podcast_data = json.loads(f.read())
@@ -87,4 +96,4 @@ for n in range(10):
 
 
 for user in all_users:
-    crud.become_friends(user.user_id, choice(range(9)))
+    crud.become_friends(user.user_id, choice(range(1, 9)))

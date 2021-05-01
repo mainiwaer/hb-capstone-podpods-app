@@ -357,6 +357,33 @@ def show_podcast_details(id):
                            collections=collections)
 
 
+@app.route('/genres')
+def show_genre_page():
+    """Shows user page of all genres."""
+
+    genres = crud.get_genres()
+
+    return render_template('all_genres.html', genres=genres)
+
+
+@app.route('/genre/<id>')
+def show_podcasts_by_genre(id):
+    """Shows user podcasts by selected genre."""
+
+    url = f'https://listen-api.listennotes.com/api/v2/best_podcasts?genre_id={id}&page=1&region=us&safe_mode=0'
+
+    headers = {'X-ListenAPI-Key': API_KEY}
+
+    response = requests.request('GET', url, headers=headers)
+    results = response.json()
+    genre_name = results['name']
+    podcasts = results['podcasts']
+
+    return render_template('genre_results.html',
+                           genre_name=genre_name,
+                           podcasts=podcasts)
+
+
 @app.route('/review', methods=['POST'])
 def submit_podcast_review():
     """Create user submitted review."""

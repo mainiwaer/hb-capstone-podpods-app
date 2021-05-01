@@ -144,6 +144,19 @@ class CollectionPodcasts(db.Model):
         return f'CollectionPodcasts id={self.collection_podcasts_id}'
 
 
+class Genre(db.Model):
+    """Genres of Podcasts."""
+
+    __tablename__ = 'genres'
+
+    genre_id = db.Column(db.String,
+                         primary_key=True)
+    genre_name = db.Column(db.String)
+
+    def __repr__(self):
+        return f'Genre id={self.genre_id} name={self.genre_name}'
+
+
 ######################################################################
 
 

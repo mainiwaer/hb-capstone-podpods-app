@@ -40,7 +40,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="/genres">Genres</a>
           </li>
 
           <li class="nav-item">
@@ -51,12 +51,12 @@
 
         <form class="d-flex" method="GET" action="/search">
           <div class="input-group">
-            <input type="text" name="q" class="form-control">
-              <select name="search-type" id="search-select" class="form-select" aria-label="Search Type Selection">
+            <input type="text" name="q" class="form-control border-primary" style="background:rgba(255, 255, 255, 0.2); width:250px;">
+              <select name="search-type" id="search-select" style="background:rgba(255, 255, 255, 0.2); width:120px" class="form-select border-primary" aria-label="Search Type Selection">
                 <option name="search-type" value="podcast-search">Podcast</option>
                 <option name="search-type" value="user-search">User</option>
               </select>
-            <button type="submit" class="btn btn-outline-secondary">Search</button>
+            <button type="submit" class="btn btn-outline-primary">Search</button>
           </div>
         </form>
 
@@ -88,9 +88,12 @@
       <!-- all other page content -->
 
     {% for msg in get_flashed_messages() %}
-      <p class="flash-msg">
-        {{ msg }}
-      </p>
+
+    <div class="alert alert-primary alert-dismissible" role="alert">
+      {{ msg }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     {% endfor %}
 
   {% block content %}
@@ -98,7 +101,10 @@
   BODY CONTENT HERE
   
   {% endblock %}
-
+  <div class="container">
+    <div class="row" style="height: 150px;">
+    </div>
+  </div>
       <div class="footer">
         Podcast Site 2021 About Link, Contact Page
       </div>
