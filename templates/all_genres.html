@@ -5,13 +5,22 @@
 {% block header %}Podcast Review Site{% endblock %}
 
 {% block content %}
-    <h3>Genres</h3>
-    <ul>
-        {% for genre in genres %}
-            <li>
-                <a href="/genre/{{ genre.genre_id }}">{{ genre.genre_name }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-  </div>
+
+<section class="container mt-4 align-items-center" style="width: 999;">
+
+    <h3 style="text-align: center;">All Genres:</h3>
+    <div class="row " style="height: 40px;"></div>
+    <div class="container-fluid align-items-center" style="text-align: center;">
+        <div class="row">
+            {% for genre in genres %}
+            <div class="m-2" style="width:300px">
+                <h6><a id="genre-text" style="text-decoration:none; vertical-align: text-top" href="/genre/{{ genre.genre_id }}">{{ genre.genre_name }}</a></h6>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</section>
+
 {% endblock %}
+

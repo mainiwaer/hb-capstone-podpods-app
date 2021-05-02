@@ -5,22 +5,40 @@
 {% block header %}Podcast Review Site{% endblock %}
 
 {% block content %}
-    <h3>Podcast Recommendations:</h3>
 
-    {% for podcast in result %}
-        <ul class="list-group list-group-horizontal">
-            <li class="list-group-item">            
-                <div style="float:left">
-                    <img src="{{ podcast['thumbnail'] }}">            
-                </div>
-                <div style="display: inline">
-                    <a href="/podcast/{{ podcast['id'] }}">
-                        <h4>{{ podcast['title']}}</h4>
-                    </a>
-                    {{ podcast['description']}}    
-                </div>
-            </li>
-        </ul>
-    {% endfor %}
+<section class="container mt-4 align-items-center" style="max-width: 900px;">
+    <h3 style="text-align: center;">Podcast Recommendations:</h3>
 
+{% for podcast in result %}
+
+  <div class="card m-4 rounded-3" style="max-width: 900px; border-width: 5px ; border-color:rgba(16, 23, 128, .9); background-color: rgba(255, 199, 161, 0.89)" >
+    <div class="row g-0 m-3">
+          <div class="col-md-5">
+            <a href="/podcast/{{ podcast['id'] }}">
+              <img style="border: 5px solid #101780" src="{{ podcast['thumbnail'] }}"> 
+            </a>
+          </div>
+
+        <div class="col-md-7">
+          <div class="card-body">
+
+            <h3 id="body-header" class="card-title">
+              <a href="/podcast/{{ podcast['id'] }}" id="body-header" style="text-decoration:none">
+                {{ podcast['title']}}
+              </a>
+            </h3>
+
+              <p class="card-text">                    
+                <p>
+                  {{ podcast['description']}}
+                </p>
+              </p>
+
+          </div>
+        </div>
+    </div>
+  </div>
+
+{% endfor %}
+</section>
 {% endblock %}

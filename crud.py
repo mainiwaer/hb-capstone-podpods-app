@@ -105,8 +105,8 @@ def get_hot_pods():
 
 def get_genres():
     """Returns list of all genres."""
-
-    return Genre.query.all()
+    
+    return Genre.query.order_by('genre_name').all()
 
 
 def get_reviews_by_podcast_id(podcast_id):

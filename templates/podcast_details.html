@@ -5,97 +5,113 @@
 {% block header %}Podcast Review Site{% endblock %}
 
 {% block content %}
-<div class="container-fluid" style="height: 400px;">
-    <div class="row">
-        <div class="col-md-auto" style="float:left">
-            <img src="{{ podcast['thumbnail'] }}">
-        </div>
-        <div class="col">
-            <h3>{{ podcast['title'] }}</h3>
-            <div>
-                {{ podcast['description'] }} 
-            </div>`
-            <div>
-                Language: {{ podcast['language'] }}&nbsp;&nbsp;&nbsp;&nbsp;
-                Explicit Content: {{ explicit }}&nbsp;&nbsp;&nbsp;&nbsp;
-                Total Episodes: {{ podcast['total_episodes'] }}&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="{{ podcast['website'] }}">Website</a> &nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-</div>
-</div>
-    {% if session %}
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            Add To Collection
-        </button>
-            <div class="dropdown-menu">
+<section class="container mt-4 align-items-center" style="max-width: 1200px;">
 
-                <form class="px-4 py-3" action="/addtocollection" method="POST">
-                    <div class="form-group">
-                        <label for="addToCollection">Select A Collection:</label>
-                        <select class="form-control" name="collection-id" id="exampleFormControlSelect1">
-                            {% for collection_id, name in collections.items() %}
-                                <option value="{{ collection_id }}">{{ name }}</option>
-                            {% endfor %} 
-                        </select>             
-                        <input type="hidden" value="{{ podcast.id }}" name="podcast-id">
-                        <input type="hidden" value="{{ podcast['title'] }}" name="podcast-title">
-                        <input type="hidden" value="{{ podcast['thumbnail'] }}" name="podcast-cover">
-                        <button type="submit" class="btn btn-primary">Add</button>
-                    </div>
-                </form>
-
-                <form class="px-4 py-3" action="/addtonewcollection" method="POST">
-                    <div class="form-group">
-                        <label for="addCollection">Add To New Collection:</label>
-                        <input class="form-control" input-type="text" name="new-collection-name" placeholder="New Collection Name">
-                        <input type="hidden" value="{{ podcast.id }}" name="podcast-id">
-                        <input type="hidden" value="{{ podcast['title'] }}" name="podcast-title">
-                        <input type="hidden" value="{{ session['email'] }}" name="user-email">
-                        <input type="hidden" value="{{ podcast['thumbnail'] }}" name="podcast-cover">
-                        <button type="submit" class="btn btn-primary">Add</button>
-                    </div>
-                </form>
-
+<div class="card m-4">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-auto" style="float:left">
+                <img src="{{ podcast['thumbnail'] }}">
             </div>
-    {% endif%}
+            <div class="col">
+                <h3>{{ podcast['title'] }}</h3>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                        <th scope="row"></th>
+                            <td>Language: {{ podcast['language'] }}</td>
+                            <td>Explicit Content: {{ explicit }}</td>
+                            <td>Total Episodes: {{ podcast['total_episodes'] }}</td>
+                            <td><a href="{{ podcast['website'] }}">Website</a></td>
+                        </tr>
+                        <tr>
+                            <td colspan="10">
+                            {{ podcast['description'] }} 
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                {% if session %}
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Add To Collection
+                </button>
+                    <div class="dropdown-menu">
+
+                        <form class="px-4 py-3" action="/addtocollection" method="POST">
+                            <div class="form-group">
+                                <label for="addToCollection">Select A Collection:</label>
+                                <select class="form-control" name="collection-id" id="exampleFormControlSelect1">
+                                    {% for collection_id, name in collections.items() %}
+                                        <option value="{{ collection_id }}">{{ name }}</option>
+                                    {% endfor %} 
+                                </select>             
+                                <input type="hidden" value="{{ podcast.id }}" name="podcast-id">
+                                <input type="hidden" value="{{ podcast['title'] }}" name="podcast-title">
+                                <input type="hidden" value="{{ podcast['thumbnail'] }}" name="podcast-cover">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </form>
+    
+                        <form class="px-4 py-3" action="/addtonewcollection" method="POST">
+                            <div class="form-group">
+                                <label for="addCollection">Add To New Collection:</label>
+                                <input class="form-control" input-type="text" name="new-collection-name" placeholder="New Collection Name">
+                                <input type="hidden" value="{{ podcast.id }}" name="podcast-id">
+                                <input type="hidden" value="{{ podcast['title'] }}" name="podcast-title">
+                                <input type="hidden" value="{{ session['email'] }}" name="user-email">
+                                <input type="hidden" value="{{ podcast['thumbnail'] }}" name="podcast-cover">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>
 
-<br style="clear:both"/>
+<div class="container">
+    <div class="row d-flex">
+        <div class="col-7 mt-3 me-4">
+            <h5>Recent Reviews:</h5>
+        </div>
+        <div class="col-4 mt-3 ms-auto">
+            <h5>Recent Episodes:</h5>
+        </div>
 
-<div>
-    <h5>Recent Episodes:</h5>
-    <div style="width:700px;height:150px;overflow:scroll;padding:5px">
-        {% for ep in podcast['episodes'] %}
-            <li class="list-group-item list-group-item-action">
+    <div class="row d-flex">
+        <div class="col-7 mt-3 me-4" style="height:500px;overflow:scroll; background: white;">
+        {% if reviews %}
+            {% for review in reviews %}
+            <div class="row m-2 mt-4">
+                    <div>
+                        <a href="/user/{{ review.user.username }}">{{ review.user.username }}</a> said:
+                    </div>
+                    <div>
+                        {{ review.review_text }}
+                    </div>
+            </div>
+            {% endfor %}
+        {% else %}
+        <p>Add the first review!</p>
+        {% endif %}
+        </div>
+
+        <div class="col-4 mt-3 ms-auto" style="height:500px;overflow:scroll; background: white;">
+            {% for ep in podcast['episodes'] %}
+                <div class="row m-2 mt-4">
                 <div>
                     <h5>{{ ep['title'] }}</h5>
-
                 </div>
                 <div> 
                     <audio controls src="{{ep['audio']}}">hehe</audio>
                 </div>
-            </li>
-        {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </div>  
 
-<div style="width:700px;height:150px;overflow:scroll;padding:5px">
-    <h5>Recent Reviews:</h5>
-    {% if reviews %}
-        {% for review in reviews %}
-            <li class="list-group-item list-group-item-action">
-                <div>
-                    <a href="/user/{{ review.user.username }}">{{ review.user.username }}</a> said:
-                </div>
-                <div>
-                    {{ review.review_text }}
-                </div>
-            </li>
-        {% endfor %}
-    {% else %}
-    <p>Add the first review!</p>
-    {% endif %}
-</div>
 <div>
     <h5>Add Your Own Review:</h5>
     <form action="/review" method="POST">
@@ -118,5 +134,6 @@
         </div>
     <input type="submit" href="/review">
 </div>
+</section>
 
 {% endblock %}

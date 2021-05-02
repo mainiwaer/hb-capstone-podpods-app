@@ -7,13 +7,23 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Bungee', cursive;
-  color: #ffa143;
+  color: #ffbe7d;
   text-shadow:  -3px 3px #101780, -1px 0 #101780, 0 1px #101780, 1px 0 #101780, 0 -1px #101780
 }
 
 #body-header {
   color: #101780;
   text-shadow: none;
+}
+
+#genre-text {
+  color: #101780;
+  text-shadow: none;
+}
+
+#genre-text:hover {
+  color:#f17900
+
 }
 
 #page-container {
@@ -93,8 +103,8 @@ nav {
   width: 100%;
   bottom: 0;
   padding-top: 10;
-  height: 100px;
-  background:rgba(191, 102, 13, 0.5);
+  height: 120px;
+  background: linear-gradient(0deg, #ffbe7d, #29b8ff );
   text-align: center;
 
 }

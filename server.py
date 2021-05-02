@@ -363,7 +363,8 @@ def show_genre_page():
 
     genres = crud.get_genres()
 
-    return render_template('all_genres.html', genres=genres)
+    return render_template('all_genres.html',
+                           genres=genres)
 
 
 @app.route('/genre/<id>')

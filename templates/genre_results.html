@@ -6,36 +6,38 @@
 
 {% block content %}
 <section class="container mt-4 align-items-center" style="max-width: 900px;">
-    <h3 style="color: rgb(255, 102, 0);">Top "{{ genre_name }}" Podcasts </h3>
+    <h3 style="text-align: center;">Top "{{ genre_name }}" Podcasts </h3>
 
-{% for podcast in podcasts %}
+    {% for podcast in podcasts %}
 
-  <div class="card m-4 rounded-3" style="max-width: 800px; border-color:rgb(255, 102, 0); background: linear-gradient(to left, #d1e7f9, #ecdecd);" >
-    <div class="row g-0 m-3">
-          <div class="col-md-5">
-            <img src="{{ podcast['thumbnail'] }}"> 
-          </div>
-
-        <div class="col-md-7">
-          <div class="card-body">
-
-            <h3 class="card-title">
-              <a href="/podcast/{{ podcast['id'] }}" style="text-decoration:none; color:black">
-                {{ podcast['title']}}
+    <div class="card m-4 rounded-3" style="max-width: 900px; border-width: 5px ; border-color:rgba(16, 23, 128, .9); background-color: rgba(255, 199, 161, 0.89)" >
+      <div class="row g-0 m-3">
+            <div class="col-md-5">
+              <a href="/podcast/{{ podcast['id'] }}">
+                <img style="border: 5px solid #101780" src="{{ podcast['thumbnail'] }}"> 
               </a>
-            </h3>
-
-              <p class="card-text">                    
-                <p>
-                  {{ podcast['description']}}
+            </div>
+  
+          <div class="col-md-7">
+            <div class="card-body">
+  
+              <h3 id="body-header" class="card-title">
+                <a href="/podcast/{{ podcast['id'] }}" id="body-header" style="text-decoration:none">
+                  {{ podcast['title']}}
+                </a>
+              </h3>
+  
+                <p class="card-text">                    
+                  <p>
+                    {{ podcast['description']}}
+                  </p>
                 </p>
-              </p>
-
+  
+            </div>
           </div>
-        </div>
+      </div>
     </div>
-  </div>
-
-{% endfor %}
-</section>
+  
+  {% endfor %}
+  </section>
 {% endblock %}
