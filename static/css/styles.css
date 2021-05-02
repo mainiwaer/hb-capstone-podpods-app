@@ -2,9 +2,13 @@ body {
   font-family: 'Open Sans', sans-serif;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(0deg, #3bdbff, #4edfff, #b6faff,#d2f7fa,#d2f7fa);
+  background: url('/static/images/rainbow-sm.png') right bottom no-repeat, linear-gradient(0deg, #3bdbff, #4edfff, #b6faff,#d2f7fa,#d2f7fa);
+  z-index: -1;
 }
 
+
+
+/* linear-gradient(0deg, #3bdbff, #4edfff, #b6faff,#d2f7fa,#d2f7fa) */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Bungee', cursive;
   color: #ffb56a;

@@ -95,7 +95,7 @@
             </div>
             {% endfor %}
         {% else %}
-        <p>Add the first review!</p>
+            <p>Add the first review!</p>
         {% endif %}
         </div>
 
@@ -114,27 +114,47 @@
     </div>
 </div>  
 
-<div>
-    <h5>Add Your Own Review:</h5>
-    <form action="/review" method="POST">
-        <input type="hidden" value="{{ podcast.id }}" name="podcast-id">
-        <input type="hidden" value="{{ podcast['thumbnail'] }}" name="podcast-cover">
-        <input type="hidden" value="{{ podcast['title'] }}" name="podcast-title">
-        <input type="hidden" value="{{ session['email']| default('no user') }}" name="user-email">
-        <div>
-            Score:
-            <select name="score">
-                <option value=1>1</option>
-                <option value=2>2</option>
-                <option value=3>3</option>
-                <option value=4>4</option>
-                <option value=5>5</option>
-            </select>
-        </div>
-        <div>
-            <textarea style="width:700px" name="review-text"></textarea>
-        </div>
-    <input type="submit" href="/review">
+<div class="container-fluid">
+    <div class="row d-flex">
+        <h5>Add Your Own Review:</h5>
+            <form action="/review" method="POST">
+                <input type="hidden" value="{{ podcast.id }}" name="podcast-id">
+                <input type="hidden" value="{{ podcast['thumbnail'] }}" name="podcast-cover">
+                <input type="hidden" value="{{ podcast['title'] }}" name="podcast-title">
+                <input type="hidden" value="{{ session['email']| default('no user') }}" name="user-email">
+                <div class="row justify-content-start">
+                    <div class="col-1 d-inline-block align-text-center">
+                        <h6 class="align-middle" id="body-header"> Score:</h6>
+                    </div>
+                    <div class="col">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="score" id="inlineRadio1" value="5">
+                            <label class="form-check-label" for="inlineRadio1">5</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="score" id="inlineRadio2" value="4">
+                            <label class="form-check-label" for="inlineRadio2">4</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="score" id="inlineRadio3" value="3">
+                            <label class="form-check-label" for="inlineRadio3">3</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="score" id="inlineRadio2" value="2">
+                            <label class="form-check-label" for="inlineRadio2">2</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="score" id="inlineRadio3" value="1">
+                            <label class="form-check-label" for="inlineRadio3">1</label>
+                          </div>
+                    </div>
+                </div>
+                <div class="col-7 pod-card">
+                    <textarea class="col-7 w-100" style="height: 200px; background:rgba(255, 255, 255, 0.411);" name="review-text" placeholder="Add Your Review!"></textarea>
+                </div>
+            <input type="submit" href="/review">
+            </form>
+    </div>
 </div>
 </section>
 

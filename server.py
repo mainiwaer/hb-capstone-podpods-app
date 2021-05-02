@@ -335,6 +335,9 @@ def show_podcast_details(id):
 
     reviews = crud.get_reviews_by_podcast_id(id)
 
+    if reviews:
+        reviews = reversed(reviews)
+
     if explicit_tag:
         tag = 'Yes'
     else:
