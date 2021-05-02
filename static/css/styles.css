@@ -8,7 +8,12 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Bungee', cursive;
   color: #ffa143;
-  text-shadow:  -1px 0 #101780, 0 1px #101780, 1px 0 #101780, 0 -1px #101780
+  text-shadow:  -3px 3px #101780, -1px 0 #101780, 0 1px #101780, 1px 0 #101780, 0 -1px #101780
+}
+
+#body-header {
+  color: #101780;
+  text-shadow: none;
 }
 
 #page-container {
