@@ -15,34 +15,28 @@
     <!-- Jumbotron -->
 </header>
 
+
+
 <section class="container mt-4">
-    <div id="carouselControls" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <a href="/podcast/{{ first_pod.podcast_id }}">
-            <img src="{{ first_pod.cover }}" style="width: 300px; height: 300px" class="d-block" alt="..."/>
-          </a>
-        </div>
-
-        {% for podcast in podcasts %}
-        <div class="carousel-item">
-          <a href="/podcast/{{ podcast.podcast_id }}">
-            <img src="{{ podcast.cover }}" style = "width: 300px; height: 300px; align-self: center;" class="d-block" alt="..."/>
-          </a>
-            </div>
-        {% endfor %}
-
+<div class="card" style="width: 260px; height: 400px;">
+  <div id="carouselControls" class="carousel slide" data-bs-interval="1800" data-bs-ride="carousel" style="width: 200px;">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <a href="/podcast/{{ first_pod.podcast_id }}">
+          <img src="{{ first_pod.cover }}" style="width: 200px; height: 200px" class="d-block" alt="..."/>
+        </a>
       </div>
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
+      {% for podcast in podcasts %}
+      <div class="carousel-item">
+        <a href="/podcast/{{ podcast.podcast_id }}">
+          <img src="{{ podcast.cover }}" style = "width: 200px; height: 200px; align-self: center;" class="d-block" alt="..."/>
+        </a>
+          </div>
+      {% endfor %}
 
     </div>
+  </div>
+</div>
 </section>
 {% endblock %}

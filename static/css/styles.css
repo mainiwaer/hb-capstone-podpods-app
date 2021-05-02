@@ -1,14 +1,40 @@
 body {
-  font-family: sans-serif Arial;
+  font-family: 'Open Sans', sans-serif;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(0deg, #00aeff, #2bb7fe, #44bffd, #59c7fb, #6dcffa, #81d7f9, #94def8, #a7e5f7, #b9ebf8, #ccf2f9, #def8fb, #f0feff);
+  background: linear-gradient(0deg, #3bdbff, #4edfff, #b6faff,#d2f7fa,#d2f7fa);
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Bungee', cursive;
-  color: #ffbe7d;
+  color: #ffb56a;
   text-shadow:  -3px 3px #101780, -1px 0 #101780, 0 1px #101780, 1px 0 #101780, 0 -1px #101780
+}
+
+.pod-info-result {
+  max-width: 900px; 
+  border-bottom: 6px solid;
+  border-left: 6px solid;
+  border-top: 2px solid;
+  border-right: 2px solid;
+  border-color: rgba(16, 23, 128, .9);
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 0%;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+
+.pod-card {
+  border-bottom: 6px solid;
+  border-left: 6px solid;
+  border-top: 2px solid;
+  border-right: 2px solid;
+  border-color: rgba(16, 23, 128, .9);
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 0%;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 #body-header {
@@ -110,7 +136,7 @@ nav {
   bottom: 0;
   padding-top: 10;
   height: 120px;
-  background: linear-gradient(0deg, #ffbe7d, #29b8ff );
+  background: linear-gradient(0deg, #ffbe7d, #3bdbff );
   text-align: center;
 
 }
@@ -124,12 +150,6 @@ nav {
   position: relative
 
 }
-
-.card-text p {
-  overflow: hidden;
-  max-width: 75ch;
-}
-
 
 .button:focus {
   outline: none;
@@ -184,5 +204,5 @@ nav {
 
 .button:hover {
   border: 0;
-  color: #4edfff;;
+  color: #4edfff;
 }

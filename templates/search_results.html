@@ -10,11 +10,11 @@
 
 {% for podcast in result %}
 
-  <div class="card m-4 rounded-3" style="max-width: 900px; border-width: 5px ; border-color:rgba(16, 23, 128, .9); background-color: rgba(255, 199, 161, 0.89)" >
+  <div class="card m-4 pod-info-result" >
     <div class="row g-0 m-3">
           <div class="col-md-5">
             <a href="/podcast/{{ podcast['id'] }}">
-              <img style="border: 5px solid #101780" src="{{ podcast['thumbnail'] }}"> 
+              <img style="border: 2px solid #101780" src="{{ podcast['thumbnail'] }}"> 
             </a>
           </div>
 

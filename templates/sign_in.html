@@ -5,19 +5,37 @@
 {% block header %}Podcast Review Site{% endblock %}
 
 {% block content %}
-    <h2>Sign In</h2>
-    <form action="/signin" method="POST">
 
+<section class="container mt-4 align-items-center" style="max-width: 400px;">
+    <div>
         <p>
-            Email <input type="text" name="email">
+            &nbsp;
         </p>
+    </div>
+    <div class="card pod-card">
+        <div class="card-body">
+        <h2 style="text-align: center;">Sign In</h2>
 
-        <p>
-            Password <input type="password" name="password">
-        </p>
+        <form action="/signin" method="POST">
+            <div class="row">
+                <div class="mb-3">
+                    <label for="email" class="form-label"><h5>Email address:</h5></label>
+                    <input name="email" type="email" class="form-control" placeholder="name@example.com">
+                </div>
 
-        <p>
-            <input type="submit" value="Sign In">
-        </p>
-    </form>
+                <div class="mb-3">
+                    <label for="password" class="form-label body-header"><h5>Password:</h5></label>
+                    <input name="password" type="password" class="form-control" placeholder="password">
+                </div>
+
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button type="submit" class="btn nav-text">
+                        Sign In
+                    </button>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+</section>
 {% endblock %}

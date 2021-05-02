@@ -24,8 +24,6 @@ os.environ["FLASK_KEY"]
 app.secret_key = os.environ["FLASK_KEY"]
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
-# os.environ["FLASK_KEY"]
-
 app.jinja_env.undefined = StrictUndefined
 
 API_KEY = os.environ["LISTENNOTES_KEY"]

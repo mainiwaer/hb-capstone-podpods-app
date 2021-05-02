@@ -5,20 +5,42 @@
 {% block header %}Podcast Review Site{% endblock %}
 
 {% block content %}
-    <h2>Create An Account</h2>
-    <form action="/users" method="POST">
+<section class="container mt-4 align-items-center" style="max-width: 400px;">
+    <div>
+        <p>
+            &nbsp;
+        </p>
+    </div>
+    <div class="card pod-card">
+        <div class="card-body">
+        <h2 style="text-align: center;">Sign Up</h2>
 
-    <p>
-        Username <input type="text" name="username">
-    </p>
-    <p>
-        Email <input type="text" name="email">
-    </p>
-    <p>
-        Password <input type="password" name="password">
-    </p>
-    <p>
-        <input type="submit">
-    </p>
-    </form>
+        <form action="/users" method="POST">
+            <div class="row">
+                <div class="mb-3">
+                    <label for="username" class="form-label"><h5>Username:</h5></label>
+                    <input name="username" type="username" class="form-control" placeholder="username">
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label"><h5>Email address:</h5></label>
+                    <input name="email" type="email" class="form-control" placeholder="name@example.com">
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label body-header"><h5>Password:</h5></label>
+                    <input name="password" type="password" class="form-control" placeholder="password">
+                </div>
+
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button type="submit" class="btn nav-text">
+                        Sign Up
+                    </button>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+</section>
+
 {% endblock %}
