@@ -19,7 +19,28 @@ body {
 }
 
 nav {
-    background: rgba(245, 184, 122, 0.9);
+    background: rgba(255, 180, 106, 0.89);
+    
+}
+
+.nav-text {
+  text-decoration:none;
+  text-transform: uppercase;
+  float: center;
+  letter-spacing: 1px;
+  color: rgb(220, 248, 255);
+  font-weight: bold;
+  font-size: 16px;
+  text-shadow: 2px 2px #101780
+}
+
+.navbar-brand {
+  font-family: 'Bungee Shade', cursive;
+}
+
+.nav-text:hover {
+  color: rgb(59, 216, 255);
+
 }
 
 .mt-4, .my-4 {
@@ -48,7 +69,6 @@ nav {
   width: 100%;
   bottom: 0;
   padding-top: 10;
-
   height: 100px;
   background:rgba(191, 102, 13, 0.5);
   text-align: center;
@@ -68,4 +88,61 @@ nav {
 .card-text p {
   overflow: hidden;
   max-width: 75ch;
+}
+
+
+.button:focus {
+  outline: none;
+}
+
+.button {
+  text-transform: uppercase;
+  float: center;
+  width:100px;
+  height: 75px;
+  display: block;
+  background: none;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 1px;
+  color: rgb(220, 248, 255);
+  font-weight: bold;
+  font-size: 16px;
+  border: 0;
+  cursor: pointer;
+  text-shadow: 2px 2px #101780;
+}
+
+.button::after {
+  content: "";
+  background-color: transparent;
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  opacity: 0;
+  color: rgb(220, 248, 255);
+  z-index: -1;
+}
+
+.button:hover::after {
+  opacity: 1;
+  background-color: rgba(255, 153, 37, 0.699);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.button,
+.button:after {
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+
+.button:hover {
+  border: 0;
 }
