@@ -5,59 +5,114 @@
 {% block header %}Podcast Review Site{% endblock %}
 
 {% block content %}
+
+<section class="container mt-4 align-items-center" style="max-width: 1200px;">
+
     <h4>{{ user }}'s Profile</h4>
-    <div>
-        <img src="{{ profile_picture }}" id="profile">
-    </div>
-    <p>
-        Member Since:{{ created_on }}
-    </p>
-    <p>
-        <b>User Bio: </b>{{ user_bio }}
-    </p>
+    
+        <div class="card m-4 pod-card">
+            <div class="card-body">
+                <div class="row d-flex">
+                    <div class="col-md-auto" style="float:left">
+                        <img class="rounded-circle" style="width: 200px;height: 200px;" src="{{ profile_picture }}">
+                    </div>
+                <div class="col">
+                    <table class="table table-borderless">
+                            <tr class="col">
+                                <td class="align-middle"><h6 id="body-header">{{ user }}</h6></td>
+                                <td class="align-middle"><h6 id="body-header">Member Since: {{ created_on.strftime("%B %Y") }}</h6></td>
+                                <td class="align-middle"><h6 id="body-header">Birthday: {{ birthday.strftime("%b %Y") }}</h6></td>
+                                <td>
+                                {% if session %}
+                                    <td class="align-middle">
+                                    <form action="/addfriend" method="POST">
+                                        <input type="hidden" value="{{ user }}" name="friend-username">
+                                        <input type="hidden" value="{{ session['email'] }}" name="user-email">
+                                        <input type="hidden" value="{{ profile_user_id }}" name="friend-id">
+                                        <button type="submit"><h6 id="body-header">Add Friend</h6></button>
+                                    </form>
+                                    </td>
+                                {% endif %}
 
-    {% if session %}
-            <form action="/addfriend" method="POST">
-                <input type="hidden" value="{{ user }}" name="friend-username">
-                <input type="hidden" value="{{ session['email'] }}" name="user-email">
-                <input type="hidden" value="{{ profile_user_id }}" name="friend-id">
-                <button type="submit">Add Friend</button>
-            </form>
-    {% endif %}
-
-    <div><h5>{{ user }}'s recent reviews:</h5></div>
-
-    {% for review in reviews %}
-        <li class="list-group-item list-group-item-action">
-            <b><a href="/podcast/{{ review.podcast.podcast_id }}">{{ review.podcast.title }}</a></b> &nbsp;&nbsp;
-            Score: {{ review.score }}
-            <div>
-                {{ review.review_text }}
-            </div>
-        </li>
-    {% endfor %}
-
-    <div><h5>{{ user }}'s Collections</h5></div>
-
-    {% for collection in collections %}
-        <div style="margin-bottom: 10px;">
-            <h5>{{ collection.name }}</h5>
-
-            {% for pod in collections_details[collection.name] %}
-                <div style="float:left">
-                    <a href="/podcast/{{ pod.podcast_id }}">
-                        <div>
-                            <img style="width: 200px; height: 200px"src="{{ pod.cover }}">
-                        </div>
-                        <div style="width: 200px; overflow-wrap: anywhere;">
-                            {{ pod.title }}
-                        </div>
-                    </a> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="10">
+                                    <h5 id="body-header">Bio:</h5>
+                                    <p>{{ user_bio }}</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-            {% endfor %}
-            
+            </div>    
+        </div>    
+    
+    <div class="container">
+    
+    <div class="row gx-4 justify-content-between">
+        <h4>{{ user }}'s Collections:</h4>
+        <div class="col-6">
+        {% for collection in collections %}
+                <div class="row">
+                    <div class="card m-2 me-4 pod-card">
+                        <div class="card-body center">
+                            <h5>{{ collection.name }}</h5>
+    
+                            {% for pod in collections_details[collection.name] %}
+                            <div class="me-1" style="float:left">
+                                <a href="/podcast/{{ pod.podcast_id }}">
+                                    <div>
+                                        <img style="width: 150px; height: 150px"src="{{ pod.cover }}">
+                                    </div>
+                                    <div style="width: 150px; overflow-wrap: anywhere;">
+                                        <h6 id="body-header" style="text-decoration: none; text-align: center;"> {{ pod.title }}</h6>
+                                    </div>
+                                </a> 
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
         </div>
-        <br style="clear:both"/>
-    {% endfor %}
-
+        <div class="col-5">
+            <div class="row">
+                <div class="card mt-2 pod-card">
+                    <p></p>
+                    <div><h5>{{ user }}'s Pod Squad:</h5></div>
+                        {% if friends %}
+                            {% for friend in friends %}
+                            <a class="nav-text" href="/user/{{ friend.username }}" id="navbarDropdown">
+                                <img src="{{ friend.profile_picture }}" width="40" height="40" class="d-inline-block align-text-center rounded-circle">      
+                                {{ friend.username }}
+                            </a>
+                            {% endfor %}
+                        {% else %}
+                            No friends yet!
+                        {% endif %}
+                    <p></p>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="card mt-2 pod-card">
+                    <p></p>
+                    <h5>Recent Reviews:</h5>
+                        {% for review in reviews %}
+                            <div>
+                                <h6 id="body-header" style="text-decoration: none;">{{ review.podcast.title }} &nbsp;&nbsp;&nbsp;&nbsp;Score: {{ review.score }}/5</h6> 
+                            </div>
+                            <div>
+                                {{ review.review_text }}
+                                <p></p>
+                            </div>
+                    {% endfor %}
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
 {% endblock %}

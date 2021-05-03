@@ -229,6 +229,15 @@ def show_other_user_profile(username):
     user_bio = account.user_bio
     created_on = account.created_on
     user_id = account.user_id
+    birthday = account.birthday
+    website = account.website
+
+    user_friends = []
+    user_friendships = account.added_friends
+    for friendship in user_friendships:
+        user_friend_id = friendship.friend_id
+        friend_account = crud.get_user_by_user_id(user_friend_id)
+        user_friends.append(friend_account)
 
     collection_names = {}
     collections_pods = {}
@@ -249,7 +258,10 @@ def show_other_user_profile(username):
                            user=username,
                            reviews=reviews,
                            profile_picture=profile_picture,
+                           birthday=birthday,
+                           website=website,
                            user_bio=user_bio,
+                           friends=user_friends,
                            created_on=created_on,
                            collections=collections,
                            collections_details=collections_pods,
