@@ -62,7 +62,7 @@ for n in range(10):
     password = 'rest'
     created_on = datetime.now()
     profile_picture = '/static/images/anon_whale.png'
-    user_bio = fake.sentence(nb_words=50)
+    user_bio = fake.sentence(nb_words=30)
     website = fake.profile()['website']
     birthday = fake.profile()['birthdate']
 
@@ -80,7 +80,7 @@ for n in range(10):
     for p in range(5):
         random_podcast = choice(podcasts_in_db)
         score = randint(1, 5)
-        review_text = fake.sentence(nb_words=80)
+        review_text = fake.sentence(nb_words=30)
         crud.create_review(new_user, random_podcast, review_text, score)
 
     new_collection = crud.create_collection(new_user, "Top Favs")
