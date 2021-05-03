@@ -7,36 +7,65 @@
 {% block content %}
 <header>
     <!-- Jumbotron -->
-    <div class="p-5 text-center ">
-      <h1 class="mb-3">Sign Up Now!</h1>
-      <h4 class="mb-3">Have fun</h4>
-      <a class="btn btn-primary" href="/signup" role="button">Sign Up</a>
-    </div>
-    <!-- Jumbotron -->
-</header>
-
-
-
-<section class="container mt-4">
-<div class="card" style="width: 260px; height: 400px;">
-  <div id="carouselControls" class="carousel slide" data-bs-interval="1800" data-bs-ride="carousel" style="width: 200px;">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <a href="/podcast/{{ first_pod.podcast_id }}">
-          <img src="{{ first_pod.cover }}" style="width: 200px; height: 200px" class="d-block" alt="..."/>
-        </a>
+    <body class="override">
+      <div class="background-video">
+        <video autoplay muted loop>
+          <source src="/static/images/Putting on headphones and typing.mp4" type="video/mp4">
+        </video>
       </div>
-
-      {% for podcast in podcasts %}
-      <div class="carousel-item">
-        <a href="/podcast/{{ podcast.podcast_id }}">
-          <img src="{{ podcast.cover }}" style = "width: 200px; height: 200px; align-self: center;" class="d-block" alt="..."/>
-        </a>
+  
+      <header class="container-fluid d-flex justify-content-left align-items-center text-light">
+        <div class="row">
+            <div class="col">
+              <h1>&nbsp;&nbsp;Podcasts are more fun with friends.</h1>
+              <h1>&nbsp;&nbsp;Join PodPods Today!</h1>
+              <a style="text-decoration: transparent;" href="/signup"><h1 style="color: #3bd8ff;">&nbsp;&nbsp;Sign Up</h1></a>
+            </div>
           </div>
-      {% endfor %}
-
-    </div>
-  </div>
-</div>
+      </header>
+    <!-- Jumbotron -->
 </section>
+
+<script>
+  "use strict";
+
+  // THE MOST IMPORTANT LINE you should add when using a background video
+  $('.background-video video').on('click', e => e.preventDefault());
+  function scaleVideo() {
+    if ($(window).innerWidth() > $(window).innerHeight()) {
+      $('.background-video video').attr('width', $(window).innerWidth());
+      $('.background-video video').attr('height', '');
+    } else {
+      $('.background-video video').attr('height', $(window).innerHeight());
+      $('.background-video video').attr('width', '');
+    }
+    $('header').height($('.background-video video').height());
+  }
+  $(window).on('load', scaleVideo);  // for fun, comment this line out!
+
+  $(window).on('resize', scaleVideo);
+</script>
+
 {% endblock %}
+
+<!-- <section class="container mt-4">
+  <div class="card" style="width: 260px; height: 400px;">
+    <div id="carouselControls" class="carousel slide" data-bs-interval="1800" data-bs-ride="carousel" style="width: 200px;">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <a href="/podcast/{{ first_pod.podcast_id }}">
+            <img src="{{ first_pod.cover }}" style="width: 200px; height: 200px" class="d-block" alt="..."/>
+          </a>
+        </div>
+  
+        {% for podcast in podcasts %}
+        <div class="carousel-item">
+          <a href="/podcast/{{ podcast.podcast_id }}">
+            <img src="{{ podcast.cover }}" style = "width: 200px; height: 200px; align-self: center;" class="d-block" alt="..."/>
+          </a>
+            </div>
+        {% endfor %}
+  
+      </div>
+    </div>
+  </div> -->

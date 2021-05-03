@@ -280,7 +280,7 @@ def add_another_user_as_friend():
 
     crud.become_friends(current_user_id, friend_id)
 
-    flash(f'You have become friends with {friend_username}!')
+    flash(f'You have added {friend_username} to your squad!')
 
     return redirect(f'/user/{friend_username}')
 

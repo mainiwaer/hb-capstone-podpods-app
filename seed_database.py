@@ -90,6 +90,7 @@ for n in range(10):
     for collect in collects:
 
         for r in range(5):
+            pods = podcasts_in_db
             random_podcast = choice(podcasts_in_db)
             crud.add_to_podcast_collection(collect,
                                            random_podcast)
