@@ -5,104 +5,74 @@
 {% block header %}Podcast Review Site{% endblock %}
 
 {% block content %}
-<div>
-    <h4>Hello, {{ user }}!</h4>
-    <p>
-        <div>
-            <img src="{{ profile_picture }}" id="profile">
-        </div>
-        member since:{{ created_on }}
-        {{ user_bio }}
-    </p>
+<section class="container mt-4 align-items-center" style="max-width: 1200px;">
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profile-edit">
-        Edit Profile
-    </button>
-    
-    <!-- Modal -->
-    <div class="modal fade" id="profile-edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+
+
+
+<h4>Hello, {{ user }}!</h4>
+
+    <div class="card m-4 pod-card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-auto" style="float:left">
+                    <img style="width: 200px;height: 200px;" src="{{ profile_picture }}">
+                </div>
+            <div class="col">
+                <table class="table">
+                        <tr class="col">
+                            <th scope="row"></th>
+                            <td class="align-middle"><h6 id="body-header">{{ user }}</h6></td>
+                            <td class="align-middle"><h6 id="body-header">Member Since: {{ created_on.strftime("%B %Y") }}</h6></td>
+                            <td class="align-middle"><h6 id="body-header">Birthday: {{ birthday.strftime("%b %Y") }}</h6></td>
+                            <td>
+                                <button type="button" class="btn pod-details" data-bs-toggle="modal" data-bs-target="#profile-edit">
+                                    <h6 id="body-header">Edit Profile</h6>
+                                </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="profile-edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    <div>
+                                                        <img src="{{ profile_picture }}" id="profile">
+                                                        <form action="/action_page.php">
+                                                            <label for="img">Change Profile Picture</label>
+                                                            <input type="file" id="img" name="img" accept="image/*">
+                                                            <input type="submit">
+                                                        </form>
+                                                    </div>
+                                                    {{ user_bio }}
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="10">
+                                <h6 id="body-header">Bio:</h6>
+                                <p>{{ user_bio }}</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-            <div class="modal-body">
-            
-                <p>
-                    <div>
-                        <img src="{{ profile_picture }}" id="profile">
-                        <form action="/action_page.php">
-                            <label for="img">Change Profile Picture</label>
-                            <input type="file" id="img" name="img" accept="image/*">
-                            <input type="submit">
-                          </form>
-                    </div>
-                    {{ user_bio }}
-                </p>
-
-
-
-
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-        </div>
-    </div>
-
-    <div><h5>Friends:</h5></div>
-    {% if friends %}
-        {% for friend in friends %}
-        
-            <a href="/user/{{ friend.username }}">
-                <img href="{{ friend.profile_picture }}">"
-                {{ friend.username }}
-            </a>
-
-        {% endfor %}
-    {% else %}
-        No friends yet!
-    {% endif %}
-    
-    <div><h5>Here are your recent reviews:</h5></div>
-
-    {% for review in reviews %}
-        <li class="list-group-item list-group-item-action">
-            <b>{{ review.podcast.title }}</b> &nbsp;&nbsp;
-            Score: {{ review.score }}
-            <div>
-                {{ review.review_text }}
-            </div>
-        </li>
-    {% endfor %}
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profile-edit">
-        Edit Reviews
-    </button>
-    
-    <!-- Modal -->
-    <div class="modal fade" id="profile-edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            ...
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-        </div>
-    </div>
-
+        </div>    
+    </div>    
+<h4>Your Collections:</h4>
+    <div class="card pod-card" style="width: 620px;">
     {% for collection in collections %}
         <div style="margin-bottom: 10px;">
             <h5>{{ collection.name }}</h5>
@@ -114,40 +84,42 @@
                         <img style="width: 200px; height: 200px"src="{{ pod.cover }}">
                     </div>
                     <div style="width: 200px; overflow-wrap: anywhere;">
-                        {{ pod.title }}
+                        <h6 id="body-header" style="text-decoration: none; text-align: center;"> {{pod.title }}</h6>
                     </div>
                 </a> 
             </div>
             {% endfor %}
         </div>
-        <br style="clear:both"/>
+    {% endfor %}
+    </div>
+
+
+    <div><h5>Your Pod Squad:</h5></div>
+    <div class="card">
+    {% if friends %}
+        {% for friend in friends %}
+        <a class="nav-text" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{{ friend.profile_picture }}" width="40" height="40" class="d-inline-block align-text-center rounded-circle">      
+            {{ friend.username }}
+          </a>
+        {% endfor %}
+    {% else %}
+        No friends yet!
+    {% endif %}
+    </div>
+    <div><h5>Here are your recent reviews:</h5></div>
+
+    {% for review in reviews %}
+        <li class="list-group-item list-group-item-action">
+            <b>{{ review.podcast.title }}</b> &nbsp;&nbsp;
+            Score: {{ review.score }}
+            <div>
+                {{ review.review_text }}
+            </div>
+        </li>
     {% endfor %}
 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profile-edit">
-            Edit Profile
-        </button>
-        
-        <!-- Modal -->
-        <div class="modal fade" id="profile-edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                ...
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            </div>
-        </div>
-
-</div>
+</section>
 
 {% endblock %}
 

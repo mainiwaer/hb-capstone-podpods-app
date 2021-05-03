@@ -8,7 +8,6 @@
 <section class="container mt-4 align-items-center" style="max-width: 1200px;">
 
 <div class="card m-4 pod-card">
-
     <div class="card-body">
         <div class="row">
             <div class="col-md-auto" style="float:left">
@@ -86,9 +85,10 @@
         {% if reviews %}
             {% for review in reviews %}
             <div class="row m-2 mt-4">
-                    <div>
-                        <a href="/user/{{ review.user.username }}">{{ review.user.username }}</a> said:
-                    </div>
+                    <a class="nav-text" href="#" id="navbarDropdown" role="button">
+                        <img src="{{ review.user.profile_picture }}" width="40" height="40" class="d-inline-block align-text-center rounded-circle">      
+                            {{ review.user.username }} said:
+                    </a>
                     <div>
                         {{ review.review_text }}
                     </div>

@@ -178,6 +178,8 @@ def show_user_profile():
     user_profile_picture = account.profile_picture
     user_bio = account.user_bio
     created_on = account.created_on
+    birthday = account.birthday
+    website = account.website
 
     user_friends = []
     user_friendships = account.added_friends
@@ -206,6 +208,8 @@ def show_user_profile():
                            user=user,
                            email=email,
                            reviews=user_reviews,
+                           birthday=birthday,
+                           website=website,
                            profile_picture=user_profile_picture,
                            user_bio=user_bio,
                            friends=user_friends,
