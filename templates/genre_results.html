@@ -7,10 +7,10 @@
 {% block content %}
 <section class="container mt-4 align-items-center" style="max-width: 900px;">
     <h3 style="text-align: center;">Top "{{ genre_name }}" Podcasts </h3>
-
-    {% for podcast in podcasts %}
-
-    <div class="card m-4 rounded-3" style="max-width: 900px; border-width: 5px ; border-color:rgba(16, 23, 128, .9); background-color: rgba(255, 199, 161, 0.89)" >
+  
+  {% for podcast in podcasts %}
+  
+    <div class="card m-4 pod-info-result">
       <div class="row g-0 m-3">
             <div class="col-md-5">
               <a href="/podcast/{{ podcast['id'] }}">
