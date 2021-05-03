@@ -19,7 +19,7 @@ body {
 
 .override header {
   /* Darken background so you can see text */
-  background: radial-gradient(rgba(0, 0, 0, 0.24), rgba(0,0,0,0.05), rgba(0,0,0,0));
+  background: radial-gradient(rgba(0, 0, 0, 0.116), rgba(0,0,0,0.05), rgba(0,0,0,0));
 }
 
 /* linear-gradient(0deg, #3bdbff, #4edfff, #b6faff,#d2f7fa,#d2f7fa) */
