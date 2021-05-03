@@ -7,28 +7,23 @@
 {% block content %}
 <section class="container mt-4 align-items-center" style="max-width: 1200px;">
 
-
-
-
-
 <h4>Hello, {{ user }}!</h4>
 
     <div class="card m-4 pod-card">
         <div class="card-body">
-            <div class="row">
+            <div class="row d-flex">
                 <div class="col-md-auto" style="float:left">
-                    <img style="width: 200px;height: 200px;" src="{{ profile_picture }}">
+                    <img class="rounded-circle" style="width: 200px;height: 200px;" src="{{ profile_picture }}">
                 </div>
             <div class="col">
-                <table class="table">
+                <table class="table table-borderless">
                         <tr class="col">
-                            <th scope="row"></th>
                             <td class="align-middle"><h6 id="body-header">{{ user }}</h6></td>
                             <td class="align-middle"><h6 id="body-header">Member Since: {{ created_on.strftime("%B %Y") }}</h6></td>
                             <td class="align-middle"><h6 id="body-header">Birthday: {{ birthday.strftime("%b %Y") }}</h6></td>
                             <td>
                                 <button type="button" class="btn pod-details" data-bs-toggle="modal" data-bs-target="#profile-edit">
-                                    <h6 id="body-header">Edit Profile</h6>
+                                    <h6 id="body-header">Edit Profile</h5>
                                 </button>
                                     <!-- Modal -->
                                     <div class="modal fade" id="profile-edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -62,7 +57,7 @@
                         </tr>
                         <tr>
                             <td colspan="10">
-                                <h6 id="body-header">Bio:</h6>
+                                <h5 id="body-header">Bio:</h5>
                                 <p>{{ user_bio }}</p>
                             </td>
                         </tr>
@@ -71,54 +66,69 @@
             </div>
         </div>    
     </div>    
-<h4>Your Collections:</h4>
-    <div class="card pod-card" style="width: 620px;">
+
+<div class="container">
+
+<div class="row gx-4 justify-content-between">
+    <h4>Your Collections:</h4>
+    <div class="col-6">
     {% for collection in collections %}
-        <div style="margin-bottom: 10px;">
-            <h5>{{ collection.name }}</h5>
+            <div class="row">
+                <div class="card m-2 me-4 pod-card">
+                    <div class="card-body center">
+                        <h5>{{ collection.name }}</h5>
 
-            {% for pod in collections_details[collection.name] %}
-            <div style="float:left">
-                <a href="/podcast/{{ pod.podcast_id }}">
-                    <div>
-                        <img style="width: 200px; height: 200px"src="{{ pod.cover }}">
+                        {% for pod in collections_details[collection.name] %}
+                        <div class="me-1" style="float:left">
+                            <a href="/podcast/{{ pod.podcast_id }}">
+                                <div>
+                                    <img style="width: 150px; height: 150px"src="{{ pod.cover }}">
+                                </div>
+                                <div style="width: 150px; overflow-wrap: anywhere;">
+                                    <h6 id="body-header" style="text-decoration: none; text-align: center;"> {{ pod.title }}</h6>
+                                </div>
+                            </a> 
+                        </div>
+                        {% endfor %}
                     </div>
-                    <div style="width: 200px; overflow-wrap: anywhere;">
-                        <h6 id="body-header" style="text-decoration: none; text-align: center;"> {{pod.title }}</h6>
-                    </div>
-                </a> 
+                </div>
             </div>
-            {% endfor %}
+    {% endfor %}
+    </div>
+    <div class="col-5">
+        <div class="row">
+            <div class="card mt-2 pod-card">
+                <div><h5>Your Pod Squad:</h5></div>
+                    {% if friends %}
+                        {% for friend in friends %}
+                        <a class="nav-text" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{{ friend.profile_picture }}" width="40" height="40" class="d-inline-block align-text-center rounded-circle">      
+                            {{ friend.username }}
+                        </a>
+                        {% endfor %}
+                    {% else %}
+                        No friends yet!
+                    {% endif %}
+            </div>
         </div>
-    {% endfor %}
-    </div>
 
-
-    <div><h5>Your Pod Squad:</h5></div>
-    <div class="card">
-    {% if friends %}
-        {% for friend in friends %}
-        <a class="nav-text" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="{{ friend.profile_picture }}" width="40" height="40" class="d-inline-block align-text-center rounded-circle">      
-            {{ friend.username }}
-          </a>
-        {% endfor %}
-    {% else %}
-        No friends yet!
-    {% endif %}
-    </div>
-    <div><h5>Here are your recent reviews:</h5></div>
-
-    {% for review in reviews %}
-        <li class="list-group-item list-group-item-action">
-            <b>{{ review.podcast.title }}</b> &nbsp;&nbsp;
-            Score: {{ review.score }}
-            <div>
-                {{ review.review_text }}
+        <div class="row">
+            <div class="card mt-2 pod-card">
+                <h5>Recent Reviews:</h5>
+                    {% for review in reviews %}
+                        <div>
+                            <h6 id="body-header" style="text-decoration: none;">{{ review.podcast.title }} &nbsp;&nbsp;&nbsp;&nbsp;Score: {{ review.score }}/5</h6> 
+                        </div>
+                        <div>
+                            {{ review.review_text }}
+                            <p></p>
+                        </div>
+                {% endfor %}
             </div>
-        </li>
-    {% endfor %}
-
+        </div>
+    </div>
+</div>
+</div>
 </section>
 
 {% endblock %}
