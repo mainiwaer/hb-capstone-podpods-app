@@ -1,5 +1,5 @@
-<p>![logo] ![logo] ![logo] ![logo] ![logo]</p>
-
+![logo] ![logo] ![logo] ![logo] ![logo]
+<p></p>
 PodPods: A Social Podcast Review Website 
 ===
 
@@ -27,11 +27,11 @@ PodPods runs on a python-based server using a Flask framework (server.py). the d
 # Miscellaneous
 
 __Overview Presentation:__
-<p>
+<p></p>
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=wjypy_4cU9s
 " target="_blank"><img src="http://img.youtube.com/vi/wjypy_4cU9s/0.jpg" 
 alt="Youtube Link to PodPods Presentation" width="240" height="180" border="10" /></a>
-<p>
+
 
 [logo]: https://github.com/mainiwaer/hb-capstone-podpods-app/blob/master/static/images/pod_favicon_new.png 
 
